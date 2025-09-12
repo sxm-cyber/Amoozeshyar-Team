@@ -6,6 +6,9 @@ namespace Amoozeshyar.Application.Interfaces
 	public interface IGradingService
 	{
 		Task SetGradeAsync(GradeDto dto);
+
+
+
 	}
 }
 
