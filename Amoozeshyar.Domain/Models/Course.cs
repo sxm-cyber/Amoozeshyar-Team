@@ -27,7 +27,7 @@ namespace Amoozeshyar.Domain.Models
 
 		private Course() {}
 
-		public Course(string name , string code, int units , string semester , int maxStud , string teacherId , string? description = null)
+		public Course(string name , string code, int units , string semester , int maxStud , string teacherId , string? description = null )
 		{
 			Name = name;
 			Code = code;
