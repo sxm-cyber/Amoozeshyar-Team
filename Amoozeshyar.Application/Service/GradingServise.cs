@@ -24,7 +24,13 @@ namespace Amoozeshyar.Application.Service
 
 
 
-          //  var student = await _unitOfWork .Users .GetByIdAsync(Guid.Parse );
+            var student = await _unitOfWork .Users .GetByIdAsync(Guid.Parse(enrollement.StudentId));
+            if (student == null)
+                throw new Exception("Student not Found");
+
+
+            _unitOfWork.Enrollments.Update(enrollement);
+            await _unitOfWork.CommitAsync();
 
 
 
