@@ -16,6 +16,7 @@ namespace Amoozeshyar.Infrastructure.Data
         {
             base.OnModelCreating(builder);
 
+
             builder.Entity<Course>()
                 .HasMany(c => c.Enrollments)
                 .WithOne(e => e.Course)

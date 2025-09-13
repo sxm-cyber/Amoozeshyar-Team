@@ -6,6 +6,7 @@ using Amoozeshyar.Application.Service;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Amoozeshyar.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,7 +50,7 @@ builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IEnrollmentService, EnrollmentService>();
 builder.Services.AddScoped<IGradingService, GradingServise>();
 builder.Services.AddScoped<IReportService, ReportService>();
-builder.Services.AddScoped<IUserService, IUserService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -62,6 +63,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
 
 if (app.Environment.IsDevelopment())
 {
