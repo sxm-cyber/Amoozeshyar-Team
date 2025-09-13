@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using Amoozeshyar.Application.DTOs;
 using Amoozeshyar.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,11 @@ namespace Amoozeshyar.Infrastructure.Repositories
 		}
 
         public async Task AddAsync(T entity) => await _dbset.AddAsync(entity);
+
+        public Task AddAsync(EnrollmentDto enrollment)
+        {
+            throw new NotImplementedException();
+        }
 
         public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate) => await _dbset.Where(predicate).ToListAsync();
 

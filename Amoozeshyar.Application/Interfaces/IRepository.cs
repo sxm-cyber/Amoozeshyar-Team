@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Amoozeshyar.Application.DTOs;
+using System;
 using System.Linq.Expressions;
 
 namespace Amoozeshyar.Application.Interfaces
@@ -16,8 +17,7 @@ namespace Amoozeshyar.Application.Interfaces
         void Update(T entity);
 
         void Remove(T entity);
-
-       
+        Task AddAsync(EnrollmentDto enrollment);
     }
 }
 
