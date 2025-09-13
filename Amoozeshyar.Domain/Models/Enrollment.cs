@@ -35,6 +35,8 @@ namespace Amoozeshyar.Domain.Models
 			Grade = grade;
 			IsFinalized = finalized;
 		}
-	}
+
+
+    }
 }
 
