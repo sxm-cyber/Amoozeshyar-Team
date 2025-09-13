@@ -16,6 +16,8 @@ namespace Amoozeshyar.Application.Interfaces
         void Update(T entity);
 
         void Remove(T entity);
+
+       
     }
 }
 

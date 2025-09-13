@@ -27,6 +27,9 @@ namespace Amoozeshyar.Infrastructure.Repositories
         public void Remove(T entity) => _dbset.Remove(entity); 
 
         public void Update(T entity) => _dbset.Update(entity);
+
+        
+       
     }
 }
 
