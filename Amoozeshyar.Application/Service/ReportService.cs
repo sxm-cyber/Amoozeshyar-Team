@@ -1,11 +1,6 @@
 ﻿using Amoozeshyar.Application.DTOs;
 using Amoozeshyar.Application.Interfaces;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Amoozeshyar.Application.Service
 {
@@ -32,9 +27,6 @@ namespace Amoozeshyar.Application.Service
 
 
             return _mapper.Map<IEnumerable<StudentTranscriptDto>>(enrolloment);
-            
-
-
         }
     }
 }
