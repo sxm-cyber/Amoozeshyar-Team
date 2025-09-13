@@ -49,7 +49,6 @@ builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IEnrollmentService, EnrollmentService>();
 builder.Services.AddScoped<IGradingService, GradingServise>();
 builder.Services.AddScoped<IReportService, ReportService>();
-//Emad
 builder.Services.AddScoped<IUserService, IUserService>();
 
 

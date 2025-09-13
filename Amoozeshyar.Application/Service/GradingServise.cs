@@ -24,7 +24,6 @@ namespace Amoozeshyar.Application.Service
                 throw new Exception("Enrollment not Found");
 
 
-       
             enrollement.SetGrade(dto.Grade, dto.IsFinalized);
 
 

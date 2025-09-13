@@ -3,10 +3,6 @@ using Amoozeshyar.Application.Interfaces;
 using Amoozeshyar.Infrastructure.Data;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Amoozeshyar.Application.Service
 {
@@ -35,10 +31,11 @@ namespace Amoozeshyar.Application.Service
         public async Task<IEnumerable<StudentTranscriptDto>> GetTranscriptAsync(string studentId)
         {
             var enrollments = await _context.Enrollments
+
                 .Include(e => e.Course)  
                 .Where(e => e.StudentId == studentId)
                 .ToListAsync();
-
+                 
             return _mapper.Map<IEnumerable<StudentTranscriptDto>>(enrollments);
         }
     }
