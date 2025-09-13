@@ -17,7 +17,6 @@ namespace Amoozeshyar.Application.Service
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
-
         }
         
         public async Task<IEnumerable<StudentCourseReportDto>> GetStudentByCourseAsync(Guid courseId)

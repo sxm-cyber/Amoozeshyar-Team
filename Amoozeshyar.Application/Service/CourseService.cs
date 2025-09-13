@@ -33,7 +33,7 @@ namespace Amoozeshyar.Application.Service
         public async Task DeleteCourseAsync(Guid id)
         {
             var course = await _unitOfWork.Courses.GetByIdAsync(id);
-            if (course == null)
+            if (course is null)
                 throw new Exception("Course not found");
 
             _unitOfWork.Courses.Remove(course);
@@ -50,11 +50,12 @@ namespace Amoozeshyar.Application.Service
         public async Task UpdateCourseAsync(Guid id, CourseDto dto)
         {
             var course = await _unitOfWork.Courses.GetByIdAsync(id);
-            if (course == null)
+            if (course is null)
                 throw new Exception("Course not found");
 
+            course.UpdateCourse(dto.Name, dto.Code, dto.Units, dto.Semester, dto.MaxStudent);
             
-            _mapper.Map(dto, course);
+            //_mapper.Map(dto, course);
 
             _unitOfWork.Courses.Update(course);
             await _unitOfWork.CommitAsync();

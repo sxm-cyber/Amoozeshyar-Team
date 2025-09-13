@@ -34,7 +34,7 @@ namespace Amoozeshyar.Application.Service
         public async Task RemoveEnrollmentAsync(Guid enrollmentId)
         {
             var enrollment = await _unitOfWork.Enrollments.GetByIdAsync(enrollmentId);
-            if (enrollment == null)
+            if (enrollment is null)
                 throw new Exception("Enrollment not found");
 
             _unitOfWork.Enrollments.Remove(enrollment);

@@ -23,7 +23,6 @@ namespace Amoozeshyar.Application.Service
                 throw new Exception("Enrollment not Found");
 
 
-
             var student = await _unitOfWork .Users .GetByIdAsync(Guid.Parse(enrollement.StudentId));
             if (student == null)
                 throw new Exception("Student not Found");
@@ -31,10 +30,6 @@ namespace Amoozeshyar.Application.Service
 
             _unitOfWork.Enrollments.Update(enrollement);
             await _unitOfWork.CommitAsync();
-
-
-
-
         }
     }
 }

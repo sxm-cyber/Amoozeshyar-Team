@@ -37,6 +37,15 @@ namespace Amoozeshyar.Domain.Models
 			TeacherId = teacherId;
 			Description = description;
 		}
+
+		public void UpdateCourse(string name , string code , int units , string semester , int maxStudent)
+		{
+			Name = name;
+			Code = code;
+			Units = units;
+			Semester = semester;
+			MaxStudents = maxStudent;
+		}
 		
 	}
 }
