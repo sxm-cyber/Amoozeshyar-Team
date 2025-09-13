@@ -5,7 +5,7 @@ namespace Amoozeshyar.Application.Interfaces
 {
 	public interface ICourseService
 	{
-		Task AddCourseAsync(CourseDto dto);
+		Task AddCourseAsync(CourseDto courseDto);
 
 		Task<IEnumerable<CourseDto>> GetAllCoursesAsync();
 

@@ -18,23 +18,17 @@ namespace Amoozeshyar.Application.Service
         }
         public async Task SetGradeAsync(GradeDto dto)
         {
+            
             var enrollement = await _unitOfWork.Enrollments.GetByIdAsync(dto.EnrollmentId);
             if (enrollement == null)
                 throw new Exception("Enrollment not Found");
 
 
-
-            var student = await _unitOfWork .Users .GetByIdAsync(Guid.Parse(enrollement.StudentId));
-            if (student == null)
-                throw new Exception("Student not Found");
+            enrollement.SetGrade(dto.Grade, dto.IsFinalized);
 
 
             _unitOfWork.Enrollments.Update(enrollement);
             await _unitOfWork.CommitAsync();
-
-
-
-
         }
     }
 }

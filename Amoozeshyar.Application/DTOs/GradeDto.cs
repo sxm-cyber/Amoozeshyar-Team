@@ -7,6 +7,7 @@ namespace Amoozeshyar.Application.DTOs
 
 		public double Grade { get; set; }
 
-	}
+        public bool IsFinalized { get; set; } = false;
+    }
 }
 
