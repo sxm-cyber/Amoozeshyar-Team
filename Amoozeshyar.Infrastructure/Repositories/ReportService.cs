@@ -24,7 +24,7 @@ namespace Amoozeshyar.Application.Service
         public async Task<IEnumerable<StudentCourseReportDto>> GetStudentByCourseAsync(Guid courseId)
         {
             var enrollments = await _context.Enrollments
-                .Include(e => e.Student)  
+                .Include(e => e.Student)   
                 .Include(e => e.Course)    
                 .Where(e => e.CourseId == courseId)
                 .ToListAsync();
@@ -35,7 +35,7 @@ namespace Amoozeshyar.Application.Service
         public async Task<IEnumerable<StudentTranscriptDto>> GetTranscriptAsync(string studentId)
         {
             var enrollments = await _context.Enrollments
-                .Include(e => e.Course)   
+                .Include(e => e.Course)  
                 .Where(e => e.StudentId == studentId)
                 .ToListAsync();
 
