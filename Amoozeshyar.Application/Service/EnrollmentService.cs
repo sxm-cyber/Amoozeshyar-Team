@@ -25,10 +25,19 @@ namespace Amoozeshyar.Application.Service
 
         public async Task EnrollStudentAsync(EnrollmentDto dto)
         {
-            var enrollment = _mapper.Map<Enrollment>(dto);
 
+            var course= await _unitOfWork.Courses.GetByIdAsync(dto.CourseId);
+            if (course == null)
+                throw new Exception("Course not Found");
+
+            var currentEnrollments = await _unitOfWork.Enrollments.FindAsync(e => e.CourseId == dto.CourseId);
+            if (currentEnrollments.Count() >= course.MaxStudents) 
+            throw new Exception("Class is full");
+
+            var enrollment = _mapper.Map<EnrollmentDto>(dto);
             await _unitOfWork.Enrollments.AddAsync(enrollment);
             await _unitOfWork.CommitAsync();
+
         }
 
         public async Task RemoveEnrollmentAsync(Guid enrollmentId)
