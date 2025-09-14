@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace Amoozeshyar.Application.Service
 {
-    public class GradingServise : IGradingService
+    public class GradingService : IGradingService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public GradingServise(IUnitOfWork unitOfWork)
+        public GradingService(IUnitOfWork unitOfWork)
         {
           _unitOfWork = unitOfWork;
         }
