@@ -15,7 +15,6 @@
     <None Remove="Mapping\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DTOs\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Mapping\" />
   </ItemGroup>

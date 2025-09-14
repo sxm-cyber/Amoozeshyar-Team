@@ -1,5 +1,6 @@
 ﻿using Amoozeshyar.Application.DTOs;
 using Amoozeshyar.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace Amoozeshyar.API.Controllers
 
         // POST: api/users/register
         [HttpPost("register")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Register([FromBody] UserRegisterDto dto)
         {
             try
@@ -34,6 +36,7 @@ namespace Amoozeshyar.API.Controllers
 
         // POST: api/users/login
         [HttpPost("login")]
+        [Authorize]
         public async Task<IActionResult> Login([FromBody] UserLoginDto dto)
         {
             var result = await _userService.LoginAsync(dto);
@@ -42,6 +45,26 @@ namespace Amoozeshyar.API.Controllers
                 return Unauthorized(result);
 
             return Ok(new { Token = result });
+        }
+        
+
+        [HttpPost("Forgot-Password")]
+        public async Task<IActionResult> ForgotPassword([FromBody]string emaile)
+        {
+            var token = await _userService .ForgotPasswordAsync(emaile);
+            return Ok(new {Token=token});
+
+        }
+
+        [HttpPost("Reset-Password")]
+        public async Task<IActionResult>ResetPassword([FromBody] ResetPasswordDto dto)
+        {
+
+            await _userService.ResetPasswordAsync(dto.Email, dto.Token,dto.NewPassword);
+
+            return Ok("Password Rest successfully ");
+
+
         }
     }
 }
