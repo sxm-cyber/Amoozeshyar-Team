@@ -20,17 +20,20 @@ namespace Amoozeshyar.Infrastructure.Data
             builder.Entity<Course>()
                 .HasMany(c => c.Enrollments)
                 .WithOne(e => e.Course)
-                .HasForeignKey(e => e.CourseId);
+                .HasForeignKey(e => e.CourseId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<ApplicationUser>()
                 .HasMany(u => u.Enrollments)
                 .WithOne(e => e.Student)
-                .HasForeignKey(e => e.StudentId);
+                .HasForeignKey(e => e.StudentId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<ApplicationUser>()
                 .HasMany(u => u.CoursesTeaching)
                 .WithOne(c => c.Teacher)
-                .HasForeignKey(c => c.TeacherId);
+                .HasForeignKey(c => c.TeacherId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

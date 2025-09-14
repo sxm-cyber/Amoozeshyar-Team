@@ -312,7 +312,7 @@ namespace Amoozeshyar.Infrastructure.Migrations
                     b.HasOne("Amoozeshyar.Domain.Models.ApplicationUser", "Teacher")
                         .WithMany("CoursesTeaching")
                         .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Teacher");
@@ -323,13 +323,13 @@ namespace Amoozeshyar.Infrastructure.Migrations
                     b.HasOne("Amoozeshyar.Domain.Models.Course", "Course")
                         .WithMany("Enrollments")
                         .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Amoozeshyar.Domain.Models.ApplicationUser", "Student")
                         .WithMany("Enrollments")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Course");
