@@ -49,6 +49,7 @@ namespace Amoozeshyar.API.Controllers
         
 
         [HttpPost("Forgot-Password")]
+        [AllowAnonymous]
         public async Task<IActionResult> ForgotPassword([FromBody]string emaile)
         {
             var token = await _userService .ForgotPasswordAsync(emaile);
@@ -57,6 +58,7 @@ namespace Amoozeshyar.API.Controllers
         }
 
         [HttpPost("Reset-Password")]
+        [AllowAnonymous]
         public async Task<IActionResult>ResetPassword([FromBody] ResetPasswordDto dto)
         {
 

@@ -18,7 +18,7 @@ namespace Amoozeshyar.API.Controllers
             _gradingService = gradingService;
         }
 
-        // POST: api/grading/set-grade
+        
         [HttpPost("set-grade"), Authorize(Roles = "Teacher")]
         public async Task<IActionResult> SetGrade([FromBody] GradeDto dto)
         {
