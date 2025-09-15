@@ -11,7 +11,7 @@ namespace Amoozeshyar.Application.Interfaces
     {
         Task RegisterAsync(UserRegisterDto dto);
         Task<string> LoginAsync(UserLoginDto dto);
-        Task<string> ForgotPasswordAsync(string email);
+        Task<string> ForgotPasswordAsync(ForgotPasswordDto dto);
         Task ResetPasswordAsync(string email, string token, string newPassword);
     }
 }
