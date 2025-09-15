@@ -1,5 +1,5 @@
 ﻿using Amoozeshyar.Application.Interfaces;
-using Amoozeshyar.Domain;
+using Amoozeshyar.Domain.Interfaces;
 
 namespace Amoozeshyar.Application.Service
 {

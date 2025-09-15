@@ -1,6 +1,6 @@
 ﻿using Amoozeshyar.Domain.Models;
 
-namespace Amoozeshyar.Domain
+namespace Amoozeshyar.Domain.Interfaces
 {
     public interface IEnrollmentRepository
     {

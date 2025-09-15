@@ -1,5 +1,6 @@
 ﻿using System;
 using Amoozeshyar.Domain.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,6 +36,15 @@ namespace Amoozeshyar.Infrastructure.Data
                 .WithOne(c => c.Teacher)
                 .HasForeignKey(c => c.TeacherId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+
+            builder.Entity<IdentityRole<int>>().HasData(
+
+                new IdentityRole<int> { Id=1,Name="Admin",NormalizedName="ADMIN",ConcurrencyStamp=Guid.NewGuid().ToString()},
+                new IdentityRole<int> { Id=2,Name= "Teacher",NormalizedName="TEACHER",ConcurrencyStamp=Guid.NewGuid().ToString() },
+                new IdentityRole<int> { Id=3,Name= "Student",NormalizedName="STUDENT",ConcurrencyStamp=Guid.NewGuid().ToString() }
+
+                );
 
         }
     }

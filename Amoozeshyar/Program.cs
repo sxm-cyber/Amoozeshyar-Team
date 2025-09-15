@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Amoozeshyar.Domain;
 using Microsoft.OpenApi.Models;
+using Amoozeshyar.Domain.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
