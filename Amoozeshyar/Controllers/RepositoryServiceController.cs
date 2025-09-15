@@ -1,5 +1,7 @@
 ﻿using Amoozeshyar.Application.DTOs;
 using Amoozeshyar.Application.Interfaces;
+using Amoozeshyar.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -17,16 +19,18 @@ namespace Amoozeshyar.API.Controllers
             _reportService = reportService;
         }
 
-        // GET: api/reports/course/{courseId}
+
         [HttpGet("course/{courseId}")]
+        [Authorize(Roles = Roles.Admin + "," + Roles.Teacher)]
         public async Task<IActionResult> GetStudentsByCourse(Guid courseId)
         {
             var result = await _reportService.GetStudentByCourseAsync(courseId);
             return Ok(result);
         }
 
-        // GET: api/reports/transcript/{studentId}
+     
         [HttpGet("transcript/{studentId}")]
+        [Authorize(Roles = Roles.Admin + "," + Roles.Teacher + "," + Roles.Student)]
         public async Task<IActionResult> GetTranscript(string studentId)
         {
             var result = await _reportService.GetTranscriptAsync(studentId);

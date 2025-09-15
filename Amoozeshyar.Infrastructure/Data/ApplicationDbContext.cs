@@ -21,6 +21,7 @@ namespace Amoozeshyar.Infrastructure.Data
                 .HasMany(c => c.Enrollments)
                 .WithOne(e => e.Course)
                 .HasForeignKey(e => e.CourseId)
+
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<ApplicationUser>()
@@ -34,6 +35,7 @@ namespace Amoozeshyar.Infrastructure.Data
                 .WithOne(c => c.Teacher)
                 .HasForeignKey(c => c.TeacherId)
                 .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }
