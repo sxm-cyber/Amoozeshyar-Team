@@ -32,8 +32,8 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 .AddDefaultTokenProviders();
 
 
-var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-var secretKey = jwtSettings.GetValue<string>("SecretKey");
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+var secretKey = jwtSettings["Key"];
 
 builder.Services.AddAuthentication(options =>
 {
@@ -111,9 +111,7 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// ========================
-// Middleware
-// ========================
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

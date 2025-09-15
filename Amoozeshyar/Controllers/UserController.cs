@@ -20,7 +20,7 @@ namespace Amoozeshyar.API.Controllers
 
         // POST: api/users/register
         [HttpPost("register")]
-        [Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] UserRegisterDto dto)
         {
             try
@@ -36,7 +36,7 @@ namespace Amoozeshyar.API.Controllers
 
         // POST: api/users/login
         [HttpPost("login")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] UserLoginDto dto)
         {
             var result = await _userService.LoginAsync(dto);
@@ -50,9 +50,9 @@ namespace Amoozeshyar.API.Controllers
 
         [HttpPost("Forgot-Password")]
         [AllowAnonymous]
-        public async Task<IActionResult> ForgotPassword([FromBody]string emaile)
+        public async Task<IActionResult> ForgotPassword([FromBody]ForgotPasswordDto dto )
         {
-            var token = await _userService .ForgotPasswordAsync(emaile);
+            var token = await _userService .ForgotPasswordAsync(dto);
             return Ok(new {Token=token});
 
         }
