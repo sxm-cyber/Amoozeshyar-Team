@@ -1,7 +1,8 @@
 ﻿using System;
 namespace Amoozeshyar.Domain.Models
 {
-	public class Course
+    //To Do : Remove Semester , MaxStudents ... 
+    public class Course
 	{
 
 		public Guid Id { get; private set; } = Guid.NewGuid();
@@ -14,6 +15,7 @@ namespace Amoozeshyar.Domain.Models
 
 		public string? Description { get; private set; }
 
+		//...
 		public string Semester { get; private set; } = "Fall";
 
 		public int MaxStudents { get; private set; } = 30;

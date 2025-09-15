@@ -1,11 +1,8 @@
 ﻿using Amoozeshyar.Application.DTOs;
 using Amoozeshyar.Application.Interfaces;
+using Amoozeshyar.Domain;
 using Amoozeshyar.Domain.Models;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Amoozeshyar.Application.Service
 {
@@ -22,9 +19,9 @@ namespace Amoozeshyar.Application.Service
 
         public async Task AddCourseAsync(CourseDto dto)
         {
-            
+
             var course = _mapper.Map<Course>(dto);
-            
+
 
             await _unitOfWork.Courses.AddAsync(course);
             await _unitOfWork.CommitAsync();
@@ -43,7 +40,7 @@ namespace Amoozeshyar.Application.Service
         public async Task<IEnumerable<CourseDto>> GetAllCoursesAsync()
         {
             var courses = await _unitOfWork.Courses.GetAllAsync();
-            
+
             return _mapper.Map<IEnumerable<CourseDto>>(courses);
         }
 
@@ -54,7 +51,7 @@ namespace Amoozeshyar.Application.Service
                 throw new Exception("Course not found");
 
             course.UpdateCourse(dto.Name, dto.Code, dto.Units, dto.Semester, dto.MaxStudent);
-            
+
             //_mapper.Map(dto, course);
 
             _unitOfWork.Courses.Update(course);

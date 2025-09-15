@@ -1,12 +1,8 @@
 ﻿using Amoozeshyar.Application.DTOs;
 using Amoozeshyar.Application.Interfaces;
+using Amoozeshyar.Domain;
 using Amoozeshyar.Domain.Models;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Amoozeshyar.Application.Service
 {
@@ -15,7 +11,7 @@ namespace Amoozeshyar.Application.Service
 
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        
+
         public EnrollmentService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
@@ -26,15 +22,15 @@ namespace Amoozeshyar.Application.Service
         public async Task EnrollStudentAsync(EnrollmentDto dto)
         {
 
-            var course= await _unitOfWork.Courses.GetByIdAsync(dto.CourseId);
+            var course = await _unitOfWork.Courses.GetByIdAsync(dto.CourseId);
             if (course == null)
                 throw new Exception("Course not Found");
 
             var currentEnrollments = await _unitOfWork.Enrollments.FindAsync(e => e.CourseId == dto.CourseId);
-            if (currentEnrollments.Count() >= course.MaxStudents) 
-            throw new Exception("Class is full");
+            if (currentEnrollments.Count() >= course.MaxStudents)
+                throw new Exception("Class is full");
 
-            var enrollment = _mapper.Map<EnrollmentDto>(dto);
+            var enrollment = _mapper.Map<Enrollment>(dto);
             await _unitOfWork.Enrollments.AddAsync(enrollment);
             await _unitOfWork.CommitAsync();
 

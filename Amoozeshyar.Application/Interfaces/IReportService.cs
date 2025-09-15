@@ -1,13 +1,13 @@
 ﻿using System;
-using Amoozeshyar.Application.DTOs;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Amoozeshyar.Application.Interfaces
 {
-	public interface IReportService
-	{
-		Task<IEnumerable<StudentCourseReportDto>> GetStudentByCourseAsync(Guid courseId);
+    public interface IReportService
+    {
 
-		Task<IEnumerable<StudentTranscriptDto>> GetTranscriptAsync(string studentId);
-	}
+    }
 }
-

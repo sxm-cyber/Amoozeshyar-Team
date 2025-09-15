@@ -13,20 +13,20 @@ namespace Amoozeshyar.Domain.Models
 
 		public string? Address { get; private set; }
 
-		public string Role { get; private set; } = "Student";
+		//public string Role { get; private set; } = "Student";
 
 		public ICollection<Course>? CoursesTeaching { get; private set; }
 		public ICollection<Enrollment>? Enrollments { get; private set; }
 
 		private ApplicationUser() { }
 
-		public ApplicationUser(string firstName , string lastName , string email , string role)
+		public ApplicationUser(string firstName , string lastName , string email/* , string role*/)
 		{
 			FirstName = firstName;
 			LastName = lastName;
 			Email = email;
 			UserName = email;
-			Role = role;
+			//Role = role;
 		}
 
 	}

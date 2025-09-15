@@ -1,12 +1,11 @@
-﻿using System;
-using Amoozeshyar.Application.Interfaces;
+﻿using Amoozeshyar.Domain;
 using Amoozeshyar.Domain.Models;
 using Amoozeshyar.Infrastructure.Data;
 
 namespace Amoozeshyar.Infrastructure.Repositories
 {
-	public class UnitOfWork : IUnitOfWork
-	{
+    public class UnitOfWork : IUnitOfWork
+    {
 
         private readonly ApplicationDbContext _context;
 
@@ -17,18 +16,18 @@ namespace Amoozeshyar.Infrastructure.Repositories
 
 
         public UnitOfWork(ApplicationDbContext context)
-		{
+        {
             _context = context;
             Users = new Repository<ApplicationUser>(context);
             Courses = new Repository<Course>(context);
             Enrollments = new Repository<Enrollment>(context);
-		}
+        }
 
 
         public async Task<int> CommitAsync() => await _context.SaveChangesAsync();
 
         public void Dispose() => _context.Dispose();
-       
+
     }
 }
 

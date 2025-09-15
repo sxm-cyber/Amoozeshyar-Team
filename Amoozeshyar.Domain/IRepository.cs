@@ -1,8 +1,6 @@
-﻿using Amoozeshyar.Application.DTOs;
-using System;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
-namespace Amoozeshyar.Application.Interfaces
+namespace Amoozeshyar.Domain
 {
     public interface IRepository<T> where T : class
     {
@@ -17,7 +15,7 @@ namespace Amoozeshyar.Application.Interfaces
         void Update(T entity);
 
         void Remove(T entity);
-        Task AddAsync(EnrollmentDto enrollment);
+        //Task AddAsync(EnrollmentDto enrollment);
     }
 }
 

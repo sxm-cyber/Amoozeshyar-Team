@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Amoozeshyar.Infrastructure.Data
 {
-	public class ApplicationDbContext : IdentityDbContext <ApplicationUser>
-	{
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         public DbSet<Course> Courses => Set<Course>();
@@ -39,5 +39,5 @@ namespace Amoozeshyar.Infrastructure.Data
         }
     }
 }
-   
+
 
