@@ -15,13 +15,11 @@ namespace Amoozeshyar.Domain
     {
         public class UserService : IUserService
         {
-            private readonly IUnitOfWork _unitOfWork;
             private readonly UserManager<ApplicationUser> _userManager;
             private readonly IConfiguration _config;
 
             public UserService(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, IConfiguration config)
             {
-                _unitOfWork = unitOfWork;
                 _userManager = userManager;
                 _config = config;
             }
