@@ -1,4 +1,5 @@
-﻿using Amoozeshyar.Application.Interfaces;
+﻿using Amoozeshyar.Application.DTOs;
+using Amoozeshyar.Application.Interfaces;
 using Amoozeshyar.Domain.Interfaces;
 
 namespace Amoozeshyar.Application.Service
@@ -12,6 +13,29 @@ namespace Amoozeshyar.Application.Service
             _enrollmentRepository = enrollmentRepository;
         }
 
-        // ... + life time
+        public async Task<IEnumerable<StudentCourseReportDto>> GetStudentsByCourseAsync(Guid courseId)
+        {
+            var enrollment = await _enrollmentRepository.GetByCourseIdAsync(courseId);
+
+            return enrollment.Select(e => new StudentCourseReportDto
+            {
+                StudentId = e.StudentId,
+                FullName = e.Student?.FirstName + " " + e.Student?.LastName,
+                CourseName = e.Course?.Name
+            });
+            
+        }
+
+        public async Task<IEnumerable<StudentTranscriptDto>> GetTranscriptAsync(string studentId)
+        {
+            var enrolllment = await _enrollmentRepository.GetByStudentIdAsync(studentId);
+
+            return enrolllment.Select(e => new StudentTranscriptDto
+            {
+                CourseName = e.Course?.Name,
+                Grade = e.Grade
+            });
+           
+        }
     }
 }

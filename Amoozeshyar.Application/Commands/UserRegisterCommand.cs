@@ -1,8 +1,7 @@
-﻿using System;
-using System.Text.Json.Serialization;
-namespace Amoozeshyar.Application.DTOs
+﻿using System.Text.Json.Serialization;
+namespace Amoozeshyar.Application.Commands
 {
-	public class UserRegisterDto
+	public class UserRegisterCommand
 	{
 		[JsonPropertyName("username")]
 		public string FirstName { get; set; } = string.Empty;

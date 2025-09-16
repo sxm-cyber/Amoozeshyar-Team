@@ -1,6 +1,6 @@
 ﻿using Amoozeshyar.Application.DTOs;
 using Amoozeshyar.Application.Interfaces;
-using Amoozeshyar.Domain;
+using Amoozeshyar.Domain.Interfaces;
 using Amoozeshyar.Domain.Models;
 using AutoMapper;
 
@@ -19,18 +19,22 @@ namespace Amoozeshyar.Application.Service
         }
 
 
-        public async Task EnrollStudentAsync(EnrollmentDto dto)
+        public async Task EnrollStudentAsync(EnrollmentCommand command)
         {
 
-            var course = await _unitOfWork.Courses.GetByIdAsync(dto.CourseId);
+            var course = await _unitOfWork.Courses.GetByIdAsync(command.CourseId);
             if (course == null)
                 throw new Exception("Course not Found");
 
-            var currentEnrollments = await _unitOfWork.Enrollments.FindAsync(e => e.CourseId == dto.CourseId);
-            if (currentEnrollments.Count() >= course.MaxStudents)
+            var currentEnrollments = await _unitOfWork.Enrollments
+                .FindAsync(e => e.CourseId == command.CourseId && e.TeacherId == command.TeacherId);
+
+            if (currentEnrollments.Count() >= command.MaxStudents)
                 throw new Exception("Class is full");
 
-            var enrollment = _mapper.Map<Enrollment>(dto);
+            var enrollment = _mapper.Map<Enrollment>(command);
+
+
             await _unitOfWork.Enrollments.AddAsync(enrollment);
             await _unitOfWork.CommitAsync();
 
@@ -44,8 +48,6 @@ namespace Amoozeshyar.Application.Service
 
             _unitOfWork.Enrollments.Remove(enrollment);
             await _unitOfWork.CommitAsync();
-
-
 
         }
     }

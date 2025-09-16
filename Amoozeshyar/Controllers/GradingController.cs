@@ -2,8 +2,6 @@
 using Amoozeshyar.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
 
 namespace Amoozeshyar.API.Controllers
 {
@@ -20,7 +18,7 @@ namespace Amoozeshyar.API.Controllers
 
         
         [HttpPost("set-grade"), Authorize(Roles = "Teacher")]
-        public async Task<IActionResult> SetGrade([FromBody] GradeDto dto)
+        public async Task<IActionResult> SetGrade([FromBody] GradeCommand dto)
         {
             try
             {

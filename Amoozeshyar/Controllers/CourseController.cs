@@ -2,8 +2,6 @@
 using Amoozeshyar.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
 
 namespace Amoozeshyar.API.Controllers
 {
@@ -29,7 +27,7 @@ namespace Amoozeshyar.API.Controllers
 
         [HttpPost]
         [Authorize(Roles ="Admin")]
-        public async Task<IActionResult> Add([FromBody] CourseDto dto)
+        public async Task<IActionResult> Add([FromBody] CourseCommand dto)
         {
             await _courseService.AddCourseAsync(dto);
             return Ok("Course added successfully.");
@@ -38,7 +36,7 @@ namespace Amoozeshyar.API.Controllers
  
         [HttpPut("{id}")]
         [Authorize(Roles ="Admin,Teacher")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] CourseDto dto)
+        public async Task<IActionResult> Update(Guid id, [FromBody] CourseCommand dto)
         {
             await _courseService.UpdateCourseAsync(id, dto);
             return Ok("Course updated successfully.");

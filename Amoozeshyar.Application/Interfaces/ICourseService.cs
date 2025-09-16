@@ -1,15 +1,14 @@
-﻿using System;
-using Amoozeshyar.Application.DTOs;
+﻿using Amoozeshyar.Application.DTOs;
 
 namespace Amoozeshyar.Application.Interfaces
 {
 	public interface ICourseService
 	{
-		Task AddCourseAsync(CourseDto courseDto);
+		Task AddCourseAsync(CourseCommand command);
 
-		Task<IEnumerable<CourseDto>> GetAllCoursesAsync();
+		Task<IEnumerable<CourseCommand>> GetAllCoursesAsync();
 
-		Task UpdateCourseAsync(Guid id, CourseDto dto);
+		Task UpdateCourseAsync(Guid id, CourseCommand command);
 
 		Task DeleteCourseAsync(Guid id);
 

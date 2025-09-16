@@ -1,4 +1,4 @@
-﻿using Amoozeshyar.Domain;
+﻿using Amoozeshyar.Domain.Interfaces;
 using Amoozeshyar.Domain.Models;
 using Amoozeshyar.Infrastructure.Data;
 

@@ -1,7 +1,6 @@
-﻿using System;
-namespace Amoozeshyar.Application.DTOs
+﻿namespace Amoozeshyar.Application.Commands
 {
-	public class UserLoginDto
+	public class UserLoginCommand
 	{
 		public string Email { get; set; } = string.Empty;
 

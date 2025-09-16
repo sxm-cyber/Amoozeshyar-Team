@@ -15,7 +15,7 @@ namespace Amoozeshyar.Domain.Interfaces
         void Update(T entity);
 
         void Remove(T entity);
-        //Task AddAsync(EnrollmentDto enrollment);
+        
     }
 }
 

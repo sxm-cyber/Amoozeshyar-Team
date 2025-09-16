@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace Amoozeshyar.Domain.Models
 {
@@ -13,7 +12,6 @@ namespace Amoozeshyar.Domain.Models
 
 		public string? Address { get; private set; }
 
-		
 
 		public ICollection<Course>? CoursesTeaching { get; private set; }
 		public ICollection<Enrollment>? Enrollments { get; private set; }

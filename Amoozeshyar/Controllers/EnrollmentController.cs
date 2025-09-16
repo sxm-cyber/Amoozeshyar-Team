@@ -1,10 +1,7 @@
 ﻿using Amoozeshyar.Application.DTOs;
 using Amoozeshyar.Application.Interfaces;
-using Amoozeshyar.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
 
 namespace Amoozeshyar.API.Controllers
 {
@@ -22,7 +19,7 @@ namespace Amoozeshyar.API.Controllers
      
         [HttpPost]
         [Authorize(Roles =Roles.Student)]
-        public async Task<IActionResult> Enroll([FromBody] EnrollmentDto dto)
+        public async Task<IActionResult> Enroll([FromBody] EnrollmentCommand dto)
         {
             await _enrollmentService.EnrollStudentAsync(dto);
             return Ok("Student enrolled successfully.");

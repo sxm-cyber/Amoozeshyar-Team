@@ -1,9 +1,7 @@
-﻿using Amoozeshyar.Application.DTOs;
+﻿using Amoozeshyar.Application.Commands;
 using Amoozeshyar.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
 
 namespace Amoozeshyar.API.Controllers
 {
@@ -18,15 +16,15 @@ namespace Amoozeshyar.API.Controllers
             _userService = userService;
         }
 
-        // POST: api/users/register
+        
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody] UserRegisterDto dto)
+        public async Task<IActionResult> Register([FromBody] UserRegisterCommand command)
         {
             try
             {
-                await _userService.RegisterAsync(dto);
-                return Ok("ثبت‌نام با موفقیت انجام شد.");
+                await _userService.RegisterAsync(command);
+                return Ok("Register Successfully");
             }
             catch (Exception ex)
             {
@@ -34,12 +32,12 @@ namespace Amoozeshyar.API.Controllers
             }
         }
 
-        // POST: api/users/login
+        
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody] UserLoginDto dto)
+        public async Task<IActionResult> Login([FromBody] UserLoginCommand command)
         {
-            var result = await _userService.LoginAsync(dto);
+            var result = await _userService.LoginAsync(command);
 
             if (result.StartsWith("کاربر") || result.StartsWith("رمز"))
                 return Unauthorized(result);
@@ -50,19 +48,19 @@ namespace Amoozeshyar.API.Controllers
 
         [HttpPost("Forgot-Password")]
         [AllowAnonymous]
-        public async Task<IActionResult> ForgotPassword([FromBody]ForgotPasswordDto dto )
+        public async Task<IActionResult> ForgotPassword([FromBody]ForgotPasswordCommand command)
         {
-            var token = await _userService .ForgotPasswordAsync(dto);
+            var token = await _userService .ForgotPasswordAsync(command);
             return Ok(new {Token=token});
 
         }
 
         [HttpPost("Reset-Password")]
         [AllowAnonymous]
-        public async Task<IActionResult>ResetPassword([FromBody] ResetPasswordDto dto)
+        public async Task<IActionResult>ResetPassword([FromBody] ResetPasswordCommand command)
         {
 
-            await _userService.ResetPasswordAsync(dto.Email, dto.Token,dto.NewPassword);
+            await _userService.ResetPasswordAsync(command.Email, command.Token,command.NewPassword);
 
             return Ok("Password Rest successfully ");
 

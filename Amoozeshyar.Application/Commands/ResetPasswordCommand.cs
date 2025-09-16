@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Amoozeshyar.Application.DTOs
+﻿namespace Amoozeshyar.Application.Commands
 {
-    public class ResetPasswordDto
+    public class ResetPasswordCommand
     {
         public string Email { get; set; } = string.Empty;
 

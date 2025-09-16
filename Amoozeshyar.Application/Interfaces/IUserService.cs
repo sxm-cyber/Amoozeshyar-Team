@@ -1,17 +1,12 @@
-﻿using Amoozeshyar.Application.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Amoozeshyar.Application.Commands;
 
 namespace Amoozeshyar.Application.Interfaces
 {
     public interface IUserService
     {
-        Task RegisterAsync(UserRegisterDto dto);
-        Task<string> LoginAsync(UserLoginDto dto);
-        Task<string> ForgotPasswordAsync(ForgotPasswordDto dto);
+        Task RegisterAsync(UserRegisterCommand command);
+        Task<string> LoginAsync(UserLoginCommand command);
+        Task<string> ForgotPasswordAsync(ForgotPasswordCommand dto);
         Task ResetPasswordAsync(string email, string token, string newPassword);
     }
 }

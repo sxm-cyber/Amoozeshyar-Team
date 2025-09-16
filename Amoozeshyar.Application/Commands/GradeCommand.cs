@@ -1,7 +1,6 @@
-﻿using System;
-namespace Amoozeshyar.Application.DTOs
+﻿namespace Amoozeshyar.Application.DTOs
 {
-	public class GradeDto
+	public class GradeCommand
 	{
 		public Guid EnrollmentId { get; set; }
 

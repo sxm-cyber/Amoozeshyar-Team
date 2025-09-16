@@ -1,6 +1,6 @@
 ﻿using Amoozeshyar.Application.DTOs;
 using Amoozeshyar.Application.Interfaces;
-using Amoozeshyar.Domain;
+using Amoozeshyar.Domain.Interfaces;
 using Amoozeshyar.Domain.Models;
 using AutoMapper;
 
@@ -17,10 +17,10 @@ namespace Amoozeshyar.Application.Service
             _mapper = mapper;
         }
 
-        public async Task AddCourseAsync(CourseDto dto)
+        public async Task AddCourseAsync(CourseCommand command)
         {
 
-            var course = _mapper.Map<Course>(dto);
+            var course = _mapper.Map<Course>(command);
 
 
             await _unitOfWork.Courses.AddAsync(course);
@@ -37,22 +37,20 @@ namespace Amoozeshyar.Application.Service
             await _unitOfWork.CommitAsync();
         }
 
-        public async Task<IEnumerable<CourseDto>> GetAllCoursesAsync()
+        public async Task<IEnumerable<CourseCommand>> GetAllCoursesAsync()
         {
             var courses = await _unitOfWork.Courses.GetAllAsync();
 
-            return _mapper.Map<IEnumerable<CourseDto>>(courses);
+            return _mapper.Map<IEnumerable<CourseCommand>>(courses);
         }
 
-        public async Task UpdateCourseAsync(Guid id, CourseDto dto)
+        public async Task UpdateCourseAsync(Guid id, CourseCommand command)
         {
             var course = await _unitOfWork.Courses.GetByIdAsync(id);
             if (course is null)
                 throw new Exception("Course not found");
 
-            course.UpdateCourse(dto.Name, dto.Code, dto.Units, dto.Semester, dto.MaxStudent);
-
-            //_mapper.Map(dto, course);
+            course.UpdateCourse(command.Name, command.Code, command.Units);
 
             _unitOfWork.Courses.Update(course);
             await _unitOfWork.CommitAsync();

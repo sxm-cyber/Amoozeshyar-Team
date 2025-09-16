@@ -1,22 +1,17 @@
-﻿    using Amoozeshyar.Application.DTOs;
-    using Amoozeshyar.Application.Interfaces;
+﻿using Amoozeshyar.Application.Commands;
+using Amoozeshyar.Application.Interfaces;
 using Amoozeshyar.Domain.Interfaces;
 using Amoozeshyar.Domain.Models;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.EntityFrameworkCore.Metadata;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.Options;
-    using Microsoft.IdentityModel.Tokens;
-    using System;
-    using System.Collections.Generic;
-    using System.IdentityModel.Tokens.Jwt;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Security.Claims;
-    using System.Text;
-    using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
-    namespace Amoozeshyar.Domain
+
+
+namespace Amoozeshyar.Domain
     {
         public class UserService : IUserService
         {
@@ -31,23 +26,23 @@ using Amoozeshyar.Domain.Models;
                 _config = config;
             }
 
-            public async Task RegisterAsync(UserRegisterDto dto)
+            public async Task RegisterAsync(UserRegisterCommand command)
             {
-                var user = new ApplicationUser(dto.FirstName, dto.LastName, dto.Email, dto.Role);
+                var user = new ApplicationUser(command.FirstName, command.LastName, command.Email);
 
-                var result = await _userManager.CreateAsync(user, dto.Password);
+                var result = await _userManager.CreateAsync(user, command.Password);
 
                 if (result.Succeeded)
                     throw new Exception(string.Join(", ", result.Errors.Select(i => i.Description)));
             }
 
-            public async Task<string> LoginAsync(UserLoginDto dto)
+            public async Task<string> LoginAsync(UserLoginCommand command)
             {
-                var user = await _userManager.FindByEmailAsync(dto.Email);
+                var user = await _userManager.FindByEmailAsync(command.Email);
                 if (user == null)
                     throw new Exception("User not found");
 
-                var valid = await _userManager.CheckPasswordAsync(user, dto.Pssword);
+                var valid = await _userManager.CheckPasswordAsync(user, command.Pssword);
                 if (!valid)
                     throw new Exception("The password or email is incorrect.");
 
@@ -61,8 +56,7 @@ using Amoozeshyar.Domain.Models;
                     {
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.Role)
-            }),
+                 }),
                     Expires = DateTime.UtcNow.AddHours(5),
                     SigningCredentials = new SigningCredentials(
                         new SymmetricSecurityKey(key),
@@ -73,9 +67,9 @@ using Amoozeshyar.Domain.Models;
                 return tokenHandler.WriteToken(token);
             }
 
-            public async Task<string> ForgotPasswordAsync(ForgotPasswordDto dto)
+            public async Task<string> ForgotPasswordAsync(ForgotPasswordCommand command)
             {
-                var user = await _userManager.FindByEmailAsync(dto.Email);
+                var user = await _userManager.FindByEmailAsync(command.Email);
                 if (user == null)
                     throw new Exception("User not found");
 

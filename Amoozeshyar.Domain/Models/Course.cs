@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Amoozeshyar.Domain.Models
 {
-    //To Do : Remove Semester , MaxStudents ... 
+    
     public class Course
 	{
 
@@ -13,15 +13,9 @@ namespace Amoozeshyar.Domain.Models
 
 		public int Units { get; private set; }
 
-		public string? Description { get; private set; }
+        public string? Description { get; private set; }
 
-		//...
-		public string Semester { get; private set; } = "Fall";
-
-		public int MaxStudents { get; private set; } = 30;
-
-		public string TeacherId { get; private set; } = string.Empty;
-
+		
 		public ApplicationUser? Teacher { get; private set; }
 
 		public ICollection<Enrollment>? Enrollments { get; private set; }
@@ -29,24 +23,19 @@ namespace Amoozeshyar.Domain.Models
 
 		private Course() {}
 
-		public Course(string name , string code, int units , string semester , int maxStud , string teacherId , string? description = null )
+		public Course(string name , string code, int units , string? description = null )
 		{
 			Name = name;
 			Code = code;
 			Units = units;
-			Semester = semester;
-			MaxStudents = maxStud;
-			TeacherId = teacherId;
 			Description = description;
 		}
 
-		public void UpdateCourse(string name , string code , int units , string semester , int maxStudent)
+		public void UpdateCourse(string name , string code , int units)
 		{
 			Name = name;
 			Code = code;
 			Units = units;
-			Semester = semester;
-			MaxStudents = maxStudent;
 		}
 		
 	}

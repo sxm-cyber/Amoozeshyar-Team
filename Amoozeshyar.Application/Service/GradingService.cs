@@ -1,6 +1,6 @@
 ﻿using Amoozeshyar.Application.DTOs;
 using Amoozeshyar.Application.Interfaces;
-using Amoozeshyar.Domain;
+using Amoozeshyar.Domain.Interfaces;
 
 namespace Amoozeshyar.Application.Service
 {
@@ -11,7 +11,7 @@ namespace Amoozeshyar.Application.Service
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task SetGradeAsync(GradeDto dto)
+        public async Task SetGradeAsync(GradeCommand dto)
         {
 
             var enrollement = await _unitOfWork.Enrollments.GetByIdAsync(dto.EnrollmentId);

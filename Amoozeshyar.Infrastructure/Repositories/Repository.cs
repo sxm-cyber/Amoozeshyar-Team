@@ -1,5 +1,5 @@
 ﻿using Amoozeshyar.Application.DTOs;
-using Amoozeshyar.Domain;
+using Amoozeshyar.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -7,18 +7,17 @@ namespace Amoozeshyar.Infrastructure.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        //private readonly DbContext _context;
+        
         private readonly DbSet<T> _dbset;
 
         public Repository(DbContext context)
-        {
-            //_context = context;
+        { 
             _dbset = context.Set<T>();
         }
 
         public async Task AddAsync(T entity) => await _dbset.AddAsync(entity);
 
-        public Task AddAsync(EnrollmentDto enrollment)
+        public Task AddAsync(EnrollmentCommand enrollment)
         {
             throw new NotImplementedException();
         }

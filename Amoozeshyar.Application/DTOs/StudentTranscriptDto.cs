@@ -1,5 +1,4 @@
-﻿using System;
-namespace Amoozeshyar.Application.DTOs
+﻿namespace Amoozeshyar.Application.DTOs
 {
 	public class StudentTranscriptDto
 	{

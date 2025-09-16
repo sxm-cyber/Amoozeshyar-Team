@@ -1,8 +1,10 @@
-﻿using System;
-namespace Amoozeshyar.Application.DTOs
+﻿namespace Amoozeshyar.Application.DTOs
 {
 	public class StudentCourseReportDto
 	{
+
+		public string FullName { get; set; }
+
 		public string StudentId { get; set; } = string.Empty;
 
 		public string StudentName { get; set; } = string.Empty;

@@ -8,15 +8,15 @@ namespace Amoozeshyar.Application.Service
     public class EnrollmentRepository : IEnrollmentRepository
     {
         private readonly ApplicationDbContext _context;
-        //private readonly IMapper _mapper;
+        
 
-        public EnrollmentRepository(ApplicationDbContext context/*, IMapper mapper*/)
+        public EnrollmentRepository(ApplicationDbContext context)
         {
             _context = context;
-            //_mapper = mapper;
+            
         }
 
-        public async Task<IEnumerable<Enrollment>> GetStudentByCourseAsync(Guid courseId)
+        public async Task<IEnumerable<Enrollment>> GetByCourseIdAsync(Guid courseId)
         {
             var enrollments = await _context.Enrollments
                 .Include(e => e.Student)
@@ -25,10 +25,10 @@ namespace Amoozeshyar.Application.Service
                 .ToListAsync();
 
             return enrollments;
-            //return _mapper.Map<IEnumerable<StudentCourseReportDto>>(enrollments);
+            
         }
 
-        public async Task<IEnumerable<Enrollment>> GetTranscriptAsync(string studentId)
+        public async Task<IEnumerable<Enrollment>> GetByStudentIdAsync(string studentId)
         {
             var enrollments = await _context.Enrollments
 
@@ -37,7 +37,7 @@ namespace Amoozeshyar.Application.Service
                 .ToListAsync();
 
             return enrollments;
-            //return _mapper.Map<IEnumerable<StudentTranscriptDto>>(enrollments);
+            
         }
     }
 }

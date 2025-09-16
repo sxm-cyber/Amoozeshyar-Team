@@ -6,7 +6,14 @@ namespace Amoozeshyar.Domain.Models
 		public Guid Id { get; private set; } = Guid.NewGuid();
 
 
-		public string StudentId { get; private set; } = string.Empty;
+        public string Semester { get; private set; } = "Fall";
+
+        public string TeacherId { get; private set; } = string.Empty;
+
+
+        public int MaxStudents { get; private set; } = 30;
+
+        public string StudentId { get; private set; } = string.Empty;
 		public ApplicationUser? Student { get; private set; }
 
 
@@ -23,10 +30,12 @@ namespace Amoozeshyar.Domain.Models
 
 		private Enrollment() { }
 
-		public Enrollment(string studentId , Guid courseId)
+		public Enrollment(string studentId , Guid courseId , string teacherId)
 		{
+			Id = Guid.NewGuid();
 			StudentId = studentId;
 			CourseId = courseId;
+			TeacherId = teacherId;
 
 		}
 

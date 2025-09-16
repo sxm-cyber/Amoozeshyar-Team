@@ -1,7 +1,6 @@
-﻿using System;
-namespace Amoozeshyar.Application.DTOs
+﻿namespace Amoozeshyar.Application.DTOs
 {
-	public class CourseDto
+	public class CourseCommand
 	{
 
 		public string Name { get; set; } = string.Empty;

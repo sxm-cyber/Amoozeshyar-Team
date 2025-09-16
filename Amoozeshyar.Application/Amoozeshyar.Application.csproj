@@ -13,9 +13,11 @@
     <None Remove="DTOs\" />
     <None Remove="Interfaces\" />
     <None Remove="Mapping\" />
+    <None Remove="Commands\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Mapping\" />
+    <Folder Include="Commands\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />
