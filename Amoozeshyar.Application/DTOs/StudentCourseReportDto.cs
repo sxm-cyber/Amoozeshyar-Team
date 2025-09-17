@@ -5,7 +5,7 @@
 
 		public string FullName { get; set; }
 
-		public string StudentId { get; set; } = string.Empty;
+		public Guid StudentId { get; set; } = Guid.NewGuid();
 
 		public string StudentName { get; set; } = string.Empty;
 

@@ -8,12 +8,20 @@ namespace Amoozeshyar.Domain.Models
 
         public string Semester { get; private set; } = "Fall";
 
-        public string TeacherId { get; private set; } = string.Empty;
-
-
         public int MaxStudents { get; private set; } = 30;
 
-        public string StudentId { get; private set; } = string.Empty;
+        public double? Grade { get; private set; }
+
+        public DateTime? EnrolledAt { get; private set; } = DateTime.UtcNow;
+
+        public bool IsFinalized { get; private set; } = false;
+
+
+        public Guid TeacherId { get; private set; } 
+        public ApplicationUser Teacher { get; private set; }
+
+
+		public Guid StudentId { get; private set; } 
 		public ApplicationUser? Student { get; private set; }
 
 
@@ -21,16 +29,11 @@ namespace Amoozeshyar.Domain.Models
         public Course? Course { get; private set; }
 
 
-		public double? Grade { get; private set; }
-
-		public DateTime? EnrolledAt { get; private set; } = DateTime.UtcNow;
-
-		public bool IsFinalized { get; private set; } = false;
 
 
 		private Enrollment() { }
 
-		public Enrollment(string studentId , Guid courseId , string teacherId)
+		public Enrollment(Guid studentId , Guid courseId , Guid teacherId)
 		{
 			Id = Guid.NewGuid();
 			StudentId = studentId;

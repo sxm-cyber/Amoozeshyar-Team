@@ -27,18 +27,18 @@ namespace Amoozeshyar.API.Controllers
 
         [HttpPost]
         [Authorize(Roles ="Admin")]
-        public async Task<IActionResult> Add([FromBody] CourseCommand dto)
+        public async Task<IActionResult> Add([FromBody] CourseCommand command)
         {
-            await _courseService.AddCourseAsync(dto);
+            await _courseService.AddCourseAsync(command);
             return Ok("Course added successfully.");
         }
 
  
         [HttpPut("{id}")]
         [Authorize(Roles ="Admin,Teacher")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] CourseCommand dto)
+        public async Task<IActionResult> Update(Guid id, [FromBody] CourseCommand command)
         {
-            await _courseService.UpdateCourseAsync(id, dto);
+            await _courseService.UpdateCourseAsync(id, command);
             return Ok("Course updated successfully.");
         }
 
