@@ -18,7 +18,7 @@ namespace Amoozeshyar.Domain.Models
 
 
         public Guid TeacherId { get; private set; } 
-        public ApplicationUser Teacher { get; private set; }
+        public ApplicationUser? Teacher { get; private set; }
 
 
 		public Guid StudentId { get; private set; } 
