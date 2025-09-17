@@ -18,7 +18,7 @@ namespace Amoozeshyar.API.Controllers
 
      
         [HttpPost]
-        [Authorize(Roles =Roles.Student)]
+        [Authorize(Roles = "Admin,Teacher")]
         public async Task<IActionResult> Enroll([FromBody] EnrollmentCommand dto)
         {
             await _enrollmentService.EnrollStudentAsync(dto);
@@ -27,7 +27,7 @@ namespace Amoozeshyar.API.Controllers
 
       
         [HttpDelete("{id}")]
-        [Authorize(Roles =Roles.Admin+","+Roles.Teacher)]
+        [Authorize(Roles = "Admin,Teacher")]
         public async Task<IActionResult> Remove(Guid id)
         {
             await _enrollmentService.RemoveEnrollmentAsync(id);

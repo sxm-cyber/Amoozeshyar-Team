@@ -18,7 +18,7 @@ namespace Amoozeshyar.API.Controllers
 
 
         [HttpGet("course/{courseId}")]
-        [Authorize(Roles = Roles.Admin + "," + Roles.Teacher)]
+        [Authorize(Roles = "Admin,Teacher")]
         public async Task<IActionResult> GetStudentsByCourse(Guid courseId)
         {
             var report = await _reportServce.GetStudentsByCourseAsync(courseId);
@@ -28,7 +28,7 @@ namespace Amoozeshyar.API.Controllers
 
 
         [HttpGet("transcript/{studentId}")]
-        [Authorize(Roles = Roles.Admin + "," + Roles.Teacher + "," + Roles.Student)]
+        [AllowAnonymous]
         public async Task<IActionResult> GetTranscript(string studentId)
         {
             var transcript = await _reportServce.GetTranscriptAsync(studentId);
