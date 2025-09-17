@@ -2,11 +2,11 @@
 {
 	public class EnrollmentCommand
 	{
-		public string StudentId { get; set; } = string.Empty;
+		public Guid StudentId { get; set; } = Guid.NewGuid();
 
 		public Guid CourseId { get; set; }
 
-		public string TeacherId { get; set; }
+		public Guid TeacherId { get; set; }
 
 		public int MaxStudents { get; set; }
 

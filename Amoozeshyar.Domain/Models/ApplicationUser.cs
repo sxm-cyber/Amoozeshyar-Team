@@ -2,7 +2,7 @@
 
 namespace Amoozeshyar.Domain.Models
 {
-	public class ApplicationUser : IdentityUser
+	public class ApplicationUser : IdentityUser<Guid>
 	{
 		public string FirstName { get; private set; } = string.Empty;
 
@@ -14,7 +14,8 @@ namespace Amoozeshyar.Domain.Models
 
 
 		public ICollection<Course>? CoursesTeaching { get; private set; }
-		public ICollection<Enrollment>? Enrollments { get; private set; }
+		public ICollection<Enrollment>? Enrollments { get; private set; } = new List<Enrollment>();
+		public ICollection<Enrollment> EnrollmentTeaching { get; private set; } = new List<Enrollment>();
 
 		private ApplicationUser() { }
 
