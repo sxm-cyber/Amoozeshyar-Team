@@ -29,7 +29,7 @@ namespace Amoozeshyar.API.Controllers
 
         [HttpGet("transcript/{studentId}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetTranscript(string studentId)
+        public async Task<IActionResult> GetTranscript(Guid studentId)
         {
             var transcript = await _reportServce.GetTranscriptAsync(studentId);
 

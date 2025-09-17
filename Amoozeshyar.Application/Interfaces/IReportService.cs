@@ -6,7 +6,7 @@ namespace Amoozeshyar.Application.Interfaces
     {
         Task<IEnumerable<StudentCourseReportDto>> GetStudentsByCourseAsync(Guid courseIdd);
 
-        Task<IEnumerable<StudentTranscriptDto>> GetTranscriptAsync(string studentId);
+        Task<IEnumerable<StudentTranscriptDto>> GetTranscriptAsync(Guid studentId);
 
     }
 }

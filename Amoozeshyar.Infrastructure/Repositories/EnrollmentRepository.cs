@@ -28,7 +28,7 @@ namespace Amoozeshyar.Application.Service
             
         }
 
-        public async Task<IEnumerable<Enrollment>> GetByStudentIdAsync(string studentId)
+        public async Task<IEnumerable<Enrollment>> GetByStudentIdAsync(Guid studentId)
         {
             var enrollments = await _context.Enrollments
 
