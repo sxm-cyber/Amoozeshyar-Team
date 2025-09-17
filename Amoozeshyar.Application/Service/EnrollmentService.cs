@@ -13,6 +13,7 @@ namespace Amoozeshyar.Application.Service
         private readonly IMapper _mapper;
 
         public EnrollmentService(IUnitOfWork unitOfWork, IMapper mapper)
+
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
