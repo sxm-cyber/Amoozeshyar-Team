@@ -26,7 +26,7 @@ namespace Amoozeshyar.Application.Service
             
         }
 
-        public async Task<IEnumerable<StudentTranscriptDto>> GetTranscriptAsync(string studentId)
+        public async Task<IEnumerable<StudentTranscriptDto>> GetTranscriptAsync(Guid studentId)
         {
             var enrolllment = await _enrollmentRepository.GetByStudentIdAsync(studentId);
 

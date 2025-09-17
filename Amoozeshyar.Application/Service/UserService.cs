@@ -28,7 +28,7 @@ namespace Amoozeshyar.Domain
 
             public async Task RegisterAsync(UserRegisterCommand command)
             {
-                var user = new ApplicationUser(command.FirstName, command.LastName, command.Email);
+                var user = new ApplicationUser(command.FirstName, command.LastName, command.Email, Guid.NewGuid());
 
                 var result = await _userManager.CreateAsync(user, command.Password);
 
