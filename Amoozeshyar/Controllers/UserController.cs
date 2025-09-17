@@ -1,6 +1,7 @@
 ﻿using Amoozeshyar.Application.Commands;
 using Amoozeshyar.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Amoozeshyar.API.Controllers
@@ -10,6 +11,7 @@ namespace Amoozeshyar.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
+        
 
         public UsersController(IUserService userService)
         {
