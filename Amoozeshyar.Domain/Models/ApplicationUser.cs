@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System;
+using Microsoft.AspNetCore.Identity;
 
 namespace Amoozeshyar.Domain.Models
 {
-	public class ApplicationUser : IdentityUser<Guid>
+	public class ApplicationUser : IdentityUser
 	{
 		public string FirstName { get; private set; } = string.Empty;
 
@@ -12,12 +13,13 @@ namespace Amoozeshyar.Domain.Models
 
 		public string? Address { get; private set; }
 
+		
 
 		public ICollection<Course>? CoursesTeaching { get; private set; }
-		public ICollection<Enrollment>? Enrollments { get; private set; } = new List<Enrollment>();
-		public ICollection<Enrollment> EnrollmentTeaching { get; private set; } = new List<Enrollment>();
+		public ICollection<Enrollment>? Enrollments { get; private set; }
+        public object EnrollmentTeaching { get; set; }
 
-		private ApplicationUser() { }
+        private ApplicationUser() { }
 
 		public ApplicationUser(string firstName , string lastName , string email)
 		{

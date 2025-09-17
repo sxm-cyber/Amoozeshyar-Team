@@ -1,5 +1,6 @@
 ﻿using Amoozeshyar.Application.Commands;
 using Amoozeshyar.Application.Interfaces;
+using Amoozeshyar.Application.Service;
 using Amoozeshyar.Domain.Interfaces;
 using Amoozeshyar.Domain.Models;
 using Microsoft.AspNetCore.Identity;
@@ -16,12 +17,13 @@ namespace Amoozeshyar.Domain
         public class UserService : IUserService
         {
             private readonly UserManager<ApplicationUser> _userManager;
-            private readonly IConfiguration _config;
+            private readonly ITokenService _tokenService;
 
-            public UserService(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, IConfiguration config)
+            public UserService(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, ITokenService tokenService)
             {
                 _userManager = userManager;
-                _config = config;
+               _tokenService = tokenService;
+                
             }
 
             public async Task RegisterAsync(UserRegisterCommand command)
@@ -34,36 +36,21 @@ namespace Amoozeshyar.Domain
                     throw new Exception(string.Join(", ", result.Errors.Select(i => i.Description)));
             }
 
-            public async Task<string> LoginAsync(UserLoginCommand command)
-            {
-                var user = await _userManager.FindByEmailAsync(command.Email);
-                if (user == null)
-                    throw new Exception("User not found");
+        public async Task<string> LoginAsync(UserLoginCommand command)
+        {
+            var user = await _userManager.FindByEmailAsync(command.Email);
+            if (user == null)
+                throw new Exception("User not found");
 
-                var valid = await _userManager.CheckPasswordAsync(user, command.Pssword);
-                if (!valid)
-                    throw new Exception("The password or email is incorrect.");
+            var valid = await _userManager.CheckPasswordAsync(user, command.Pssword);
+            if (!valid)
+                throw new Exception("The password or email is incorrect.");
 
-            
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.UTF8.GetBytes(_config["Jwt:Key"]);
+            return _tokenService.GenerateJwtToken(user);
 
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new[]
-                    {
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Email, user.Email),
-                 }),
-                    Expires = DateTime.UtcNow.AddHours(5),
-                    SigningCredentials = new SigningCredentials(
-                        new SymmetricSecurityKey(key),
-                        SecurityAlgorithms.HmacSha256Signature)
-                };
 
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-                return tokenHandler.WriteToken(token);
-            }
+        }
+
 
             public async Task<string> ForgotPasswordAsync(ForgotPasswordCommand command)
             {
