@@ -20,7 +20,7 @@ namespace Amoozeshyar.Application.Service
             return enrollment.Select(e => new StudentCourseReportDto
             {
                 StudentId = e.StudentId,
-                FullName = e.Student?.FirstName + " " + e.Student?.
+                FullName = e.Student?.FullName,
                 CourseName = e.Course?.Name
             });
             

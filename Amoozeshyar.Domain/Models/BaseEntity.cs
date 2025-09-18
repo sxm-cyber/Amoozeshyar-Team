@@ -7,15 +7,21 @@ namespace Amoozeshyar.Domain.Common
         public Guid Id { get; private set; } = Guid.NewGuid();
         public DateTime CreatedAt { get; private set; } = GetPersianNow();
         public Guid CreatedBy { get; private set; }
+        public DateTime UpdatedAt { get; private set; }
 
         protected BaseEntity() { }
 
         protected BaseEntity(Guid createdBy)
         {
+            Id = Guid.NewGuid();
             CreatedBy = createdBy;
             CreatedAt = GetPersianNow();
         }
 
+        public void UpdateTimestamp()
+        {
+            UpdatedAt = GetPersianNow();
+        }
 
         public static DateTime GetPersianNow()
         {

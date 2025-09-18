@@ -3,12 +3,8 @@ namespace Amoozeshyar.Application.Commands
 {
 	public class UserRegisterCommand
 	{
-		[JsonPropertyName("username")]
-		public string FirstName { get; set; } = string.Empty;
+        public string FullName { get; set; } = string.Empty;
 
-        [JsonPropertyName("lastname")]
-        public string LastName { get; set; } = string.Empty;
-        
         [JsonPropertyName("email")]
         public string Email { get; set; } = string.Empty;
 
@@ -18,7 +14,13 @@ namespace Amoozeshyar.Application.Commands
         [JsonPropertyName("role")]
         public string Role { get; set; } = "Student";
 
+        public string? PhoneNumber { get; set; }
 
-	}
+        public Stream? FileStream { get; set; }
+
+        public string? FileName { get; set; }
+
+
+    }
 }
 

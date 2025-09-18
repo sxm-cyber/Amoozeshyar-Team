@@ -11,8 +11,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using Amoozeshyar.Domain.Interfaces;
+using Amoozeshyar.Files;
 using Amoozeshyar.Domain;
-
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -74,6 +74,8 @@ builder.Services.AddScoped<IGradingService, GradingService>();
 builder.Services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IReportService, ReportService>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
+builder.Services.AddScoped<IFileStorage, FileStorage>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

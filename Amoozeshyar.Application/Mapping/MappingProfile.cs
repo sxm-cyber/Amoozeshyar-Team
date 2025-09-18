@@ -5,8 +5,8 @@ using AutoMapper;
 
 namespace Amoozeshyar.Application.Mapping
 {
-	public class MappingProfile 
-	{
+	public class MappingProfile : AutoMapper.Profile
+    {
 		public MappingProfile()
 		{
 			CreateMap<UserRegisterCommand, ApplicationUser>()
@@ -20,7 +20,7 @@ namespace Amoozeshyar.Application.Mapping
 
 			CreateMap<Enrollment, StudentCourseReportDto>()
 				.ForMember(dest => dest.StudentId, opt => opt.MapFrom(scr => scr.StudentId))
-				.ForMember(dest => dest.StudentName, opt => opt.MapFrom(scr => scr.Student != null ? $"{scr.Student.FirstName} {scr.Student.LastName}" : ""))
+				.ForMember(dest => dest.StudentName, opt => opt.MapFrom(scr => scr.Student != null ? $"{scr.Student.FullName}" : ""))
 				.ForMember(dest => dest.CourseName, opt => opt.MapFrom(scr => scr.Course != null ? scr.Course.Name : ""))
 				//.ForMember(dest => dest.Semester, opt => opt.MapFrom(scr => scr.Course != null ? scr.Course.Semester : ""))
 				.ForMember(dest => dest.Grade, opt => opt.MapFrom(scr => scr.Grade));
@@ -34,4 +34,3 @@ namespace Amoozeshyar.Application.Mapping
 		
 	}
 }
-

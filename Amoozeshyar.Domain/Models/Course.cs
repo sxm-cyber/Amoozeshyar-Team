@@ -6,8 +6,6 @@ namespace Amoozeshyar.Domain.Models
 {
     public class Course : BaseEntity
     {
-       
-
         public string Name { get; private set; } = string.Empty;
 
         public string Code { get; private set; } = string.Empty;
@@ -16,19 +14,22 @@ namespace Amoozeshyar.Domain.Models
 
         public string? Description { get; private set; }
 
+        public Guid TeacherId { get; private set; }
+
         public ApplicationUser? Teacher { get; private set; }
 
         public ICollection<Enrollment>? Enrollments { get; private set; }
 
         private Course() { }
 
-        public Course(string name, string code, int units, Guid createdBy, string? description = null)
-            : base(createdBy)
-        {
+        public Course(string name, string code, int units, Guid createdBy, Guid teacherId, string? description = null) : base(createdBy)
+        { 
+
             Name = name;
             Code = code;
             Units = units;
             Description = description;
+            TeacherId = teacherId;
         }
 
         public void UpdateCourse(string name, string code, int units)
