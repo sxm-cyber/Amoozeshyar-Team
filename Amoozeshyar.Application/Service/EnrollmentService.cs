@@ -13,6 +13,7 @@ namespace Amoozeshyar.Application.Service
         private readonly IMapper _mapper;
 
         public EnrollmentService(IUnitOfWork unitOfWork, IMapper mapper)
+
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -46,7 +47,7 @@ namespace Amoozeshyar.Application.Service
             if (enrollment is null)
                 throw new Exception("Enrollment not found");
 
-            _unitOfWork.Enrollments.Remove(enrollment);
+            _unitOfWork.Enrollments.DeleteAsync(enrollment);
             await _unitOfWork.CommitAsync();
 
         }

@@ -6,8 +6,6 @@ namespace Amoozeshyar.Domain.Models
 {
     public class Enrollment : BaseEntity
     {
-      
-
         public string Semester { get; private set; } = "Fall";
 
         public int MaxStudents { get; private set; } = 30;
@@ -18,8 +16,10 @@ namespace Amoozeshyar.Domain.Models
 
         public bool IsFinalized { get; private set; } = false;
 
+
         public Guid TeacherId { get; private set; }
         public ApplicationUser Teacher { get; private set; }
+
 
         public Guid StudentId { get; private set; }
         public ApplicationUser? Student { get; private set; }

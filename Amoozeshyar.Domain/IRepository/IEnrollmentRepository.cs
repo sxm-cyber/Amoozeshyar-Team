@@ -6,7 +6,7 @@ namespace Amoozeshyar.Domain.Interfaces
     {
         Task<IEnumerable<Enrollment>> GetByCourseIdAsync(Guid courseId);
 
-        Task<IEnumerable<Enrollment>> GetByStudentIdAsync(string studentId);
+        Task<IEnumerable<Enrollment>> GetByStudentIdAsync(Guid studentId);
     }
 }
 

@@ -20,13 +20,13 @@ namespace Amoozeshyar.Application.Service
             return enrollment.Select(e => new StudentCourseReportDto
             {
                 StudentId = e.StudentId,
-                FullName = e.Student?.FirstName + " " + e.Student?.LastName,
+                FullName = e.Student?.FullName,
                 CourseName = e.Course?.Name
             });
             
         }
 
-        public async Task<IEnumerable<StudentTranscriptDto>> GetTranscriptAsync(string studentId)
+        public async Task<IEnumerable<StudentTranscriptDto>> GetTranscriptAsync(Guid studentId)
         {
             var enrolllment = await _enrollmentRepository.GetByStudentIdAsync(studentId);
 
