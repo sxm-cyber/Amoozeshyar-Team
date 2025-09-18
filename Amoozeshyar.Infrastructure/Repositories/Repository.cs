@@ -12,8 +12,12 @@ namespace Amoozeshyar.Infrastructure.Repositories
         private readonly DbSet<T> _dbset;
 
         public Repository(ApplicationDbContext context)
+<<<<<<< HEAD
         {
             _context = context;
+=======
+        { 
+>>>>>>> 356c5dc1310c8344cf32dda79a93b5a0341a72a4
             _dbset = context.Set<T>();
         }
 

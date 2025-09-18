@@ -2,7 +2,6 @@
 using Amoozeshyar.Application.Interfaces;
 using Amoozeshyar.Application.Service;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Amoozeshyar.API.Controllers
@@ -55,23 +54,23 @@ namespace Amoozeshyar.API.Controllers
 
             return Ok(new { Token = result });
         }
-        
+
 
         [HttpPost("Forgot-Password")]
         [AllowAnonymous]
-        public async Task<IActionResult> ForgotPassword([FromBody]ForgotPasswordCommand command)
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand command)
         {
-            var token = await _userService .ForgotPasswordAsync(command);
-            return Ok(new {Token=token});
+            var token = await _userService.ForgotPasswordAsync(command);
+            return Ok(new { Token = token });
 
         }
 
         [HttpPost("Reset-Password")]
         [AllowAnonymous]
-        public async Task<IActionResult>ResetPassword([FromBody] ResetPasswordCommand command)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordCommand command)
         {
 
-            await _userService.ResetPasswordAsync(command.Email, command.Token,command.NewPassword);
+            await _userService.ResetPasswordAsync(command.Email, command.Token, command.NewPassword);
 
             return Ok("Password Rest successfully ");
 

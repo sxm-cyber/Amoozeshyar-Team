@@ -8,24 +8,24 @@ using Microsoft.AspNetCore.Identity;
 
 
 namespace Amoozeshyar.Domain
+{
+    public class UserService : IUserService
     {
-        public class UserService : IUserService
-        {
-            private readonly UserManager<ApplicationUser> _userManager;
-            private readonly ITokenService _tokenService;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ITokenService _tokenService;
         private readonly IFileStorage _fileStorage;
         private readonly IRepository<Profile> _profileRepository;
 
 
-        public UserService(UserManager<ApplicationUser> userManager, ITokenService tokenService , IFileStorage fileStorage, IRepository<Profile> profileRepository)
-            {
-                _userManager = userManager;
-               _tokenService = tokenService;
+        public UserService(UserManager<ApplicationUser> userManager, ITokenService tokenService, IFileStorage fileStorage, IRepository<Profile> profileRepository)
+        {
+            _userManager = userManager;
+            _tokenService = tokenService;
             _fileStorage = fileStorage;
             _profileRepository = profileRepository;
-           
-                
-            }
+
+
+        }
         public async Task<FullProfileDto> RegisterAsync(UserRegisterCommand command)
         {
             var user = new ApplicationUser(command.FullName, command.Email, Guid.NewGuid());
@@ -78,31 +78,32 @@ namespace Amoozeshyar.Domain
         }
 
 
-            public async Task<string> ForgotPasswordAsync(ForgotPasswordCommand command)
+        public async Task<string> ForgotPasswordAsync(ForgotPasswordCommand command)
+        {
+            var user = await _userManager.FindByEmailAsync(command.Email);
+            if (user == null)
+                throw new Exception("User not found");
+
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+
+            return token;
+
+        }
+
+        public async Task ResetPasswordAsync(string email, string token, string newPassword)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                throw new Exception("User not found");
+
+            var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+            if (!result.Succeeded)
             {
-                var user = await _userManager.FindByEmailAsync(command.Email);
-                if (user == null)
-                    throw new Exception("User not found");
-
-            
-                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-
-  
-                return token; 
-
+                throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description)));
             }
 
-            public async Task ResetPasswordAsync(string email, string token, string newPassword)
-            {
-                var user = await _userManager.FindByEmailAsync(email);
-                if (user == null)
-                    throw new Exception("User not found");
-
-                var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
-                if (!result.Succeeded)
-                {
-                    throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description)));
-                }
-
-            }
-    }}
+        }
+    }
+}
