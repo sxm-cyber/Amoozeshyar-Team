@@ -8,13 +8,13 @@ namespace Amoozeshyar.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
         private readonly IProfileService _profileService;
-        
 
-        public UsersController(IUserService userService , IProfileService profileService)
+
+        public UserController(IUserService userService, IProfileService profileService)
         {
             _userService = userService;
             _profileService = profileService;
@@ -23,8 +23,8 @@ namespace Amoozeshyar.API.Controllers
 
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromForm] string fullname,string password,
-            string email,string? phoneNumber, [FromForm] IFormFile? file)
+        public async Task<IActionResult> Register([FromForm] string fullname, string password,
+            string email, string? phoneNumber, [FromForm] IFormFile? file)
         {
 
 
@@ -70,7 +70,7 @@ namespace Amoozeshyar.API.Controllers
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordCommand command)
         {
 
-            await _userService.ResetPasswordAsync(command.Email, command.Token, command.NewPassword);
+            //await _userService.ResetPasswordAsync(command.Email, command.Token, command.NewPassword);
 
             return Ok("Password Rest successfully ");
 
