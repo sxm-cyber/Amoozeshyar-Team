@@ -33,16 +33,18 @@ namespace Amoozeshyar.Application.Service
         {
             var user = new ApplicationUser(command.FullName, command.Email, Guid.NewGuid());
             var result = await _userManager.CreateAsync(user, command.Password);
+
             if (!result.Succeeded)
                 throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description)));
 
             string picturePath = "/images/default-profile.png";
-            if (command.FileStream != null && !string.IsNullOrWhiteSpace(command.FileName))
-            {
-                picturePath = await _fileStorage.SaveFileAsync(command.FileStream, command.FileName, "uploads");
-            }
 
+            if (command.File != null && command.File.Length > 0)
+                picturePath = await _fileStorage.SaveFileAsync(command.File, "uploads");
+
+            
             var profile = new Profile(user.Id, command.FullName, user.Email, picturePath);
+
             if (!string.IsNullOrEmpty(command.PhoneNumber))
             {
                 profile.UpdateProfile(command.FullName, command.Email, command.PhoneNumber);
@@ -68,6 +70,7 @@ namespace Amoozeshyar.Application.Service
         {
             var profiles = await _profileRepository.GetAllAsync();
             var userProfile = profiles.FirstOrDefault(p => p.UserId == userId);
+
             if (userProfile == null)
                 return null;
 
@@ -75,6 +78,7 @@ namespace Amoozeshyar.Application.Service
             var roles = await _userManager.GetRolesAsync(user);
 
             var enrollments = (await _enrollmentRepository.GetAllAsync()).Where(e => e.StudentId == userId).ToList();
+
             var courseDtos = enrollments.Select(e => new CourseDto
             {
                 CourseName = e.Course.Name,

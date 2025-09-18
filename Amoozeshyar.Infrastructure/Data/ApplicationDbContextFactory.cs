@@ -8,8 +8,8 @@ namespace Amoozeshyar.Infrastructure.Data
         public ApplicationDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            //optionsBuilder.UseSqlServer("Server=.;Database=AmoozeshyarDb;Trusted_Connection=True;TrustServerCertificate=True;");
-            
+            optionsBuilder.UseSqlServer("Server=localhost,1433;Database=AmoozeshyarDB;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;Encrypt=False;MultipleActiveResultSets=True;");
+
             return new ApplicationDbContext(optionsBuilder.Options);
         }
     }

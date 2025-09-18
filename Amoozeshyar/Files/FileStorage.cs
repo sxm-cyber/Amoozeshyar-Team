@@ -5,30 +5,33 @@ namespace Amoozeshyar.Files
 {
 	public class FileStorage : IFileStorage
 	{
-        private readonly IWebHostEnvironment _env;
+        private readonly string _rootPath;
 
 		public FileStorage(IWebHostEnvironment env)
 		{
-            _env = env;
+            _rootPath = Path.Combine(env.WebRootPath, "uploads");
+
+            if (!Directory.Exists(_rootPath))
+                Directory.CreateDirectory(_rootPath);
 		}
 
-        public async Task<string> SaveFileAsync(Stream fileStream, string fileName, string folder)
+        public async Task<string> SaveFileAsync(IFormFile file, string folder)
         {
-            var uploadsPath = Path.Combine(_env.WebRootPath, folder);
+            var folderPath = Path.Combine(_rootPath, folder);
 
-            if (!Directory.Exists(uploadsPath))
-                Directory.CreateDirectory(uploadsPath);
+            if (!Directory.Exists(folderPath))
+                Directory.CreateDirectory(folderPath);
 
-            var uniqueFileName = $"{Guid.NewGuid()} {Path.GetExtension(fileName)}";
-            var filePath = Path.Combine(uploadsPath, uniqueFileName);
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+            var fullPath = Path.Combine(folderPath, fileName);
 
-            using (var stream = new FileStream(filePath,FileMode.Create))
+            using(var stream  = new FileStream(fullPath , FileMode.Create))
             {
-                await fileStream.CopyToAsync(stream);
+                await file.CopyToAsync(stream);
             }
 
-            return $"/{folder}/{uniqueFileName}";
-            
+            return $"/uploads/{folder}/{fileName}";
+
         }
     }
 }
