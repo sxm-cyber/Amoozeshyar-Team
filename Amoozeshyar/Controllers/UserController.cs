@@ -24,12 +24,8 @@ namespace Amoozeshyar.API.Controllers
 
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromForm] string fullname,
-                                          [FromForm] string password,
-                                          [FromForm] string email,
-                                          [FromForm] string? phoneNumber,
-                                          [FromForm] IFormFile? file)
-
+        public async Task<IActionResult> Register([FromForm] string fullname,string password,
+            string email,string? phoneNumber, [FromForm] IFormFile? file)
         {
 
 

@@ -13,6 +13,8 @@ using Microsoft.OpenApi.Models;
 using Amoozeshyar.Domain.Interfaces;
 using Amoozeshyar.Files;
 using Amoozeshyar.Domain;
+using System;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -22,7 +24,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         b => b.MigrationsAssembly("Amoozeshyar.Infrastructure")));
 
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
 {
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
@@ -76,6 +78,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IReportService, ReportService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<IFileStorage, FileStorage>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -118,17 +122,24 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+
     string[] roles = new string[] { "Admin", "Teacher", "Student" };
 
     foreach (var role in roles)
     {
         if (!await roleManager.RoleExistsAsync(role))
         {
-            await roleManager.CreateAsync(new IdentityRole(role));
+            await roleManager.CreateAsync(new IdentityRole<Guid>
+            {
+                Id = Guid.NewGuid(),
+                Name = role,
+                NormalizedName = role.ToUpper()
+            });
         }
     }
 }
+
 
 
 if (app.Environment.IsDevelopment())
