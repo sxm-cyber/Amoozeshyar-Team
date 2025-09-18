@@ -5,7 +5,7 @@ using AutoMapper;
 
 namespace Amoozeshyar.Application.Mapping
 {
-	public class MappingProfile : Profile
+	public class MappingProfile 
 	{
 		public MappingProfile()
 		{

@@ -1,5 +1,6 @@
 ﻿using Amoozeshyar.Application.DTOs;
 using Amoozeshyar.Domain.Interfaces;
+using Amoozeshyar.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -10,7 +11,7 @@ namespace Amoozeshyar.Infrastructure.Repositories
         
         private readonly DbSet<T> _dbset;
 
-        public Repository(DbContext context)
+        public Repository(ApplicationDbContext context)
         { 
             _dbset = context.Set<T>();
         }
