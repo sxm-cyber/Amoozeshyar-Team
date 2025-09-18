@@ -4,7 +4,7 @@ namespace Amoozeshyar.Domain.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        IRepository<ApplicationUser> Users { get; }
+        IUserRepository Users { get; }
 
         IRepository<Course> Courses { get; }
 

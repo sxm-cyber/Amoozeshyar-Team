@@ -1,5 +1,6 @@
 ﻿using Amoozeshyar.Application.Commands;
 using Amoozeshyar.Application.Interfaces;
+using Amoozeshyar.Application.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,30 +12,42 @@ namespace Amoozeshyar.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IProfileService _profileService;
         
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService , IProfileService profileService)
         {
             _userService = userService;
+            _profileService = profileService;
         }
 
-        
+
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody] UserRegisterCommand command)
+        public async Task<IActionResult> Register([FromForm] string fullname,
+                                          [FromForm] string password,
+                                          [FromForm] string email,
+                                          [FromForm] string? phoneNumber,
+                                          [FromForm] IFormFile? file)
+
         {
-            try
+
+
+            var command = new UserRegisterCommand
             {
-                await _userService.RegisterAsync(command);
-                return Ok("Register Successfully");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+                FullName = fullname,
+                Email = email,
+                Password = password,
+                PhoneNumber = phoneNumber,
+                FileStream = file?.OpenReadStream(),
+                FileName = file?.FileName
+            };
+
+            var profile = await _profileService.CreateProfileAsync(command);
+            return Ok(profile);
         }
 
-        
+
         [HttpPost("login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] UserLoginCommand command)
@@ -66,7 +79,18 @@ namespace Amoozeshyar.API.Controllers
 
             return Ok("Password Rest successfully ");
 
+        }
 
+        [HttpGet("me")]
+        [Authorize]
+        public async Task<IActionResult> GetMyProfile()
+        {
+            var userId = Guid.Parse(User.FindFirst("sub")?.Value!);
+            var profile = await _profileService.GetFullProfileAsync(userId);
+            if (profile == null)
+                return NotFound("Profile not found");
+
+            return Ok(profile);
         }
     }
 }

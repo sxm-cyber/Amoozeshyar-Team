@@ -1,15 +1,10 @@
 ﻿using Amoozeshyar.Application.Commands;
+using Amoozeshyar.Application.DTOs;
 using Amoozeshyar.Application.Interfaces;
-using Amoozeshyar.Application.Service;
+
 using Amoozeshyar.Domain.Interfaces;
 using Amoozeshyar.Domain.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-
 
 
 namespace Amoozeshyar.Domain
@@ -18,23 +13,54 @@ namespace Amoozeshyar.Domain
         {
             private readonly UserManager<ApplicationUser> _userManager;
             private readonly ITokenService _tokenService;
+        private readonly IFileStorage _fileStorage;
+        private readonly IRepository<Profile> _profileRepository;
 
-            public UserService(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, ITokenService tokenService)
+
+        public UserService(UserManager<ApplicationUser> userManager, ITokenService tokenService , IFileStorage fileStorage, IRepository<Profile> profileRepository)
             {
                 _userManager = userManager;
                _tokenService = tokenService;
+            _fileStorage = fileStorage;
+            _profileRepository = profileRepository;
+           
                 
             }
+        public async Task<FullProfileDto> RegisterAsync(UserRegisterCommand command)
+        {
+            var user = new ApplicationUser(command.FullName, command.Email, Guid.NewGuid());
+            var result = await _userManager.CreateAsync(user, command.Password);
+            if (!result.Succeeded)
+                throw new Exception(string.Join(", ", result.Errors.Select(i => i.Description)));
 
-            public async Task RegisterAsync(UserRegisterCommand command)
+
+            var profile = new Profile(user.Id, $"{command.FullName}", user.Email, "/images/default-profile.png");
+
+            if (command.FileStream != null && !string.IsNullOrWhiteSpace(command.FileName))
             {
-                var user = new ApplicationUser(command.FirstName, command.LastName, command.Email, Guid.NewGuid());
-
-                var result = await _userManager.CreateAsync(user, command.Password);
-
-                if (result.Succeeded)
-                    throw new Exception(string.Join(", ", result.Errors.Select(i => i.Description)));
+                var path = await _fileStorage.SaveFileAsync(command.FileStream, command.FileName, "uploads");
+                profile.SetProfilePicture(path);
             }
+
+            await _profileRepository.AddAsync(profile);
+            await _profileRepository.SaveChangesAsync();
+
+
+
+            var roles = await _userManager.GetRolesAsync(user);
+            return new FullProfileDto
+            {
+                FullName = profile.FullName,
+                Email = profile.Email,
+                PhoneNumber = profile.PhoneNumber,
+                ProfilePictureUrl = profile.ProfilePictureUrl,
+                UserName = user.UserName,
+                Role = roles.FirstOrDefault() ?? "",
+                Courses = new List<CourseDto>()
+            };
+        }
+
+
 
         public async Task<string> LoginAsync(UserLoginCommand command)
         {

@@ -22,7 +22,7 @@ namespace Amoozeshyar.Application.Service
             enrollement.SetGrade(dto.Grade, dto.IsFinalized);
 
 
-            _unitOfWork.Enrollments.Update(enrollement);
+            _unitOfWork.Enrollments.UpdateAsync(enrollement);
             await _unitOfWork.CommitAsync();
         }
     }

@@ -33,7 +33,7 @@ namespace Amoozeshyar.Application.Service
             if (course is null)
                 throw new Exception("Course not found");
 
-            _unitOfWork.Courses.Remove(course);
+            _unitOfWork.Courses.DeleteAsync(course);
             await _unitOfWork.CommitAsync();
         }
 
@@ -52,7 +52,7 @@ namespace Amoozeshyar.Application.Service
 
             course.UpdateCourse(command.Name, command.Code, command.Units);
 
-            _unitOfWork.Courses.Update(course);
+            _unitOfWork.Courses.UpdateAsync(course);
             await _unitOfWork.CommitAsync();
         }
     }
