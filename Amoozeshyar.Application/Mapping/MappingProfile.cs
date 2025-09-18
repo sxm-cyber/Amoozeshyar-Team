@@ -34,4 +34,3 @@ namespace Amoozeshyar.Application.Mapping
 		
 	}
 }
-
