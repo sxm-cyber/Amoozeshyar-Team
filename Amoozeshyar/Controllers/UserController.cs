@@ -14,7 +14,7 @@ namespace Amoozeshyar.API.Controllers
         private readonly IProfileService _profileService;
 
 
-        public UserController(IUserService userService, IProfileService profileService)
+        public UsersController(IUserService userService, IProfileService profileService)
         {
             _userService = userService;
             _profileService = profileService;
@@ -23,8 +23,7 @@ namespace Amoozeshyar.API.Controllers
 
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromForm] string fullname, string password,
-            string email, string? phoneNumber, [FromForm] IFormFile? file)
+        public async Task<IActionResult> Register([FromForm] UserRegisterCommand command)
         {
 
 

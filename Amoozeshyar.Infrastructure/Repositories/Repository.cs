@@ -9,17 +9,13 @@ namespace Amoozeshyar.Infrastructure.Repositories
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly ApplicationDbContext _context;
+
         private readonly DbSet<T> _dbset;
 
         public Repository(ApplicationDbContext context)
-
         {
             _context = context;
-
-            {
-
-                _dbset = context.Set<T>();
-            }
+            _dbset = context.Set<T>();
         }
 
         public async Task AddAsync(T entity) => await _dbset.AddAsync(entity);
@@ -29,6 +25,7 @@ namespace Amoozeshyar.Infrastructure.Repositories
         public async Task<T> GetByIdAsync(Guid id) => await _dbset.FindAsync(id);
 
         public async Task<List<T>> GetAllAsync() => await _dbset.ToListAsync();
+
 
         public async Task UpdateAsync(T entity)
         {

@@ -28,26 +28,40 @@ namespace Amoozeshyar.Domain
         }
         public async Task<FullProfileDto> RegisterAsync(UserRegisterCommand command)
         {
-            var user = new ApplicationUser(command.FullName, command.Email, Guid.NewGuid());
+            var user = new ApplicationUser(command.FullName, command.Email, Guid.NewGuid())
+            {
+                PhoneNumber = command.PhoneNumber,
+                UserName = command.Email
+            };
+
             var result = await _userManager.CreateAsync(user, command.Password);
+
             if (!result.Succeeded)
                 throw new Exception(string.Join(", ", result.Errors.Select(i => i.Description)));
 
-
-            var profile = new Profile(user.Id, $"{command.FullName}", user.Email, "/images/default-profile.png");
-
-            if (command.FileStream != null && !string.IsNullOrWhiteSpace(command.FileName))
+            if(!string.IsNullOrWhiteSpace(command.Role))
             {
-                var path = await _fileStorage.SaveFileAsync(command.FileStream, command.FileName, "uploads");
+                var roleResult = await _userManager.AddToRoleAsync(user, command.Role);
+
+                if (!roleResult.Succeeded)
+                    throw new Exception(string.Join(", ", result.Errors.Select(i => i.Description)));
+
+            }
+             
+
+            var profile = new Profile(user.Id,command.FullName , user.Email, "/images/default-profile.png");
+
+            if(command.File is not null)
+            {
+                var path = await _fileStorage.SaveFileAsync(command.File, "uploads");
                 profile.SetProfilePicture(path);
             }
 
             await _profileRepository.AddAsync(profile);
             await _profileRepository.SaveChangesAsync();
 
-
-
             var roles = await _userManager.GetRolesAsync(user);
+
             return new FullProfileDto
             {
                 FullName = profile.FullName,
