@@ -14,7 +14,7 @@ namespace Amoozeshyar.API.Controllers
         private readonly IProfileService _profileService;
 
 
-        public UsersController(IUserService userService, IProfileService profileService)
+        public UserController(IUserService userService, IProfileService profileService)
         {
             _userService = userService;
             _profileService = profileService;
@@ -27,15 +27,8 @@ namespace Amoozeshyar.API.Controllers
         {
 
 
-            var command = new UserRegisterCommand
-            {
-                FullName = fullname,
-                Email = email,
-                Password = password,
-                PhoneNumber = phoneNumber,
-                FileStream = file?.OpenReadStream(),
-                FileName = file?.FileName
-            };
+            
+            
 
             var profile = await _profileService.CreateProfileAsync(command);
             return Ok(profile);
