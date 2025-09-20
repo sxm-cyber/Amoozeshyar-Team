@@ -25,11 +25,14 @@ namespace Amoozeshyar.API.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromForm] UserRegisterCommand command)
         {
+<<<<<<< HEAD
+=======
 
 
             
             
 
+>>>>>>> 5b143e077ee932bc4cbac5b6e8dc6e5f944db7d5
             var profile = await _profileService.CreateProfileAsync(command);
             return Ok(profile);
         }

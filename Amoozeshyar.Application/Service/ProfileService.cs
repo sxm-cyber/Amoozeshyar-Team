@@ -31,27 +31,42 @@ namespace Amoozeshyar.Application.Service
 
         public async Task<FullProfileDto> CreateProfileAsync(UserRegisterCommand command)
         {
-            var user = new ApplicationUser(command.FullName, command.Email, Guid.NewGuid());
+            var user = new ApplicationUser(command.FullName, command.Email, Guid.NewGuid())
+            {
+                UserName = command.Email,
+                PhoneNumber = command.PhoneNumber
+            };
+
             var result = await _userManager.CreateAsync(user, command.Password);
 
             if (!result.Succeeded)
-                throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description)));
+                throw new Exception(string.Join(",", result.Errors.Select(i => i.Description)));
 
-            string picturePath = "/images/default-profile.png";
+            if(!string.IsNullOrWhiteSpace(command.Role))
+            {
+                var roleResult = await _userManager.AddToRoleAsync(user, command.Role);
+                if (!roleResult.Succeeded)
+                    throw new Exception(string.Join(",", roleResult.Errors.Select(i => i.Description)));
+            }
+
+            string profilePicture = "/images/default-profile.png";
 
             if (command.File != null && command.File.Length > 0)
-                picturePath = await _fileStorage.SaveFileAsync(command.File, "uploads");
+                profilePicture = await _fileStorage.SaveFileAsync(command.File, "uploads");
 
-            
-            var profile = new Profile(user.Id, command.FullName, user.Email, picturePath);
+            var profile = new Profile(user.Id, command.FullName, command.Email, profilePicture);
 
-            if (!string.IsNullOrEmpty(command.PhoneNumber))
-            {
+            if (!string.IsNullOrWhiteSpace(command.PhoneNumber))
                 profile.UpdateProfile(command.FullName, command.Email, command.PhoneNumber);
-            }
 
             await _profileRepository.AddAsync(profile);
             await _profileRepository.SaveChangesAsync();
+
+            user.SetProfile(profile);
+
+            await _userManager.UpdateAsync(user);
+
+            var roles = await _userManager.GetRolesAsync(user);
 
             return new FullProfileDto
             {

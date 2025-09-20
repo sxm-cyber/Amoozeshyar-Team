@@ -81,7 +81,7 @@ namespace Amoozeshyar.Infrastructure.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("ProfileId")
+                    b.Property<Guid?>("ProfileId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("SecurityStamp")
@@ -104,7 +104,9 @@ namespace Amoozeshyar.Infrastructure.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("ProfileId");
+                    b.HasIndex("ProfileId")
+                        .IsUnique()
+                        .HasFilter("[ProfileId] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -220,7 +222,6 @@ namespace Amoozeshyar.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProfilePictureUrl")
@@ -235,7 +236,7 @@ namespace Amoozeshyar.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Profile");
+                    b.ToTable("Profiles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -268,22 +269,37 @@ namespace Amoozeshyar.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
+<<<<<<< HEAD
+                            Id = new Guid("0076d2cb-3054-4b6d-bed9-2c0f43f41843"),
+                            ConcurrencyStamp = "50a7b348-8b75-4026-b885-341b8b91d189",
+=======
                             Id = new Guid("698235c7-c3f3-4a6a-81a1-805ea5b5359b"),
                             ConcurrencyStamp = "6ea582d1-88c6-4d87-9e67-d43d143cddc3",
+>>>>>>> 5b143e077ee932bc4cbac5b6e8dc6e5f944db7d5
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
+<<<<<<< HEAD
+                            Id = new Guid("f43a88a6-5c9a-4a03-947c-5658fe6cadee"),
+                            ConcurrencyStamp = "5c35beb8-22b7-4679-bf52-9acb7617b06b",
+=======
                             Id = new Guid("f9b7e0f7-ff63-4c72-989d-6d411f61920c"),
                             ConcurrencyStamp = "4478f49e-3a4e-4da5-8653-ce107e080ade",
+>>>>>>> 5b143e077ee932bc4cbac5b6e8dc6e5f944db7d5
                             Name = "Teacher",
                             NormalizedName = "TEACHER"
                         },
                         new
                         {
+<<<<<<< HEAD
+                            Id = new Guid("4bf6ec03-d3ce-4e90-8285-efcd7e3a5ede"),
+                            ConcurrencyStamp = "aafcb24d-b7c9-453a-ad02-5da2a11d37e6",
+=======
                             Id = new Guid("64a406b1-4c9c-45cb-8688-8258e654a4ae"),
                             ConcurrencyStamp = "ded70e47-9fb0-40a6-b8d7-148f3b275d74",
+>>>>>>> 5b143e077ee932bc4cbac5b6e8dc6e5f944db7d5
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         });
@@ -395,10 +411,8 @@ namespace Amoozeshyar.Infrastructure.Migrations
             modelBuilder.Entity("Amoozeshyar.Domain.Models.ApplicationUser", b =>
                 {
                     b.HasOne("Amoozeshyar.Domain.Models.Profile", "Profile")
-                        .WithMany()
-                        .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("User")
+                        .HasForeignKey("Amoozeshyar.Domain.Models.ApplicationUser", "ProfileId");
 
                     b.Navigation("Profile");
                 });
@@ -502,6 +516,12 @@ namespace Amoozeshyar.Infrastructure.Migrations
             modelBuilder.Entity("Amoozeshyar.Domain.Models.Course", b =>
                 {
                     b.Navigation("Enrollments");
+                });
+
+            modelBuilder.Entity("Amoozeshyar.Domain.Models.Profile", b =>
+                {
+                    b.Navigation("User")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
