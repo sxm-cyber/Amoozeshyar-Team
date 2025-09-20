@@ -8,7 +8,7 @@ namespace Amoozeshyar.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
         private readonly IProfileService _profileService;
@@ -25,6 +25,21 @@ namespace Amoozeshyar.API.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromForm] UserRegisterCommand command)
         {
+<<<<<<< HEAD
+=======
+
+
+            var command = new UserRegisterCommand
+            {
+                FullName = fullname,
+                Email = email,
+                Password = password,
+                PhoneNumber = phoneNumber,
+                FileStream = file?.OpenReadStream(),
+                FileName = file?.FileName
+            };
+
+>>>>>>> 5b143e077ee932bc4cbac5b6e8dc6e5f944db7d5
             var profile = await _profileService.CreateProfileAsync(command);
             return Ok(profile);
         }
@@ -57,7 +72,7 @@ namespace Amoozeshyar.API.Controllers
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordCommand command)
         {
 
-            await _userService.ResetPasswordAsync(command.Email, command.Token, command.NewPassword);
+            //await _userService.ResetPasswordAsync(command.Email, command.Token, command.NewPassword);
 
             return Ok("Password Rest successfully ");
 

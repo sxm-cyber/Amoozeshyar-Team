@@ -17,11 +17,9 @@ using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionstring = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        b => b.MigrationsAssembly("Amoozeshyar.Infrastructure")));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionstring));
 
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
@@ -130,12 +128,20 @@ using (var scope = app.Services.CreateScope())
     {
         if (!await roleManager.RoleExistsAsync(role))
         {
-            await roleManager.CreateAsync(new IdentityRole<Guid>
+            try
             {
-                Id = Guid.NewGuid(),
-                Name = role,
-                NormalizedName = role.ToUpper()
-            });
+                await roleManager.CreateAsync(new IdentityRole<Guid>
+                {
+                    Id = Guid.NewGuid(),
+                    Name = role,
+                    NormalizedName = role.ToUpper()
+                });
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
     }
 }
