@@ -11,6 +11,7 @@ namespace Amoozeshyar.Infrastructure.Data
 
         public DbSet<Course> Courses => Set<Course>();
         public DbSet<Enrollment> Enrollments => Set<Enrollment>();
+        public DbSet<Profile> Profiles => Set<Profile>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -35,6 +36,11 @@ namespace Amoozeshyar.Infrastructure.Data
                 .HasForeignKey(c => c.TeacherId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<ApplicationUser>()
+                .HasOne(u => u.Profile)
+                .WithOne(u => u.User)
+                .HasForeignKey<ApplicationUser>(u => u.ProfileId)
+                .OnDelete(DeleteBehavior.Cascade);
 
 
             builder.Entity<IdentityRole<Guid>>().HasData(

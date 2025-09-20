@@ -16,14 +16,15 @@ namespace Amoozeshyar.Domain.Models
         public string? Address { get; private set; }
 
 
-		public ICollection<Enrollment>? Enrollments { get; private set; } = new List<Enrollment>();
+
+        public ICollection<Enrollment>? Enrollments { get; private set; } = new List<Enrollment>();
 		public ICollection<Enrollment> EnrollmentTeaching { get; set; } = new List<Enrollment>();
 
 
         public DateTime CreatedAt { get; private set; } = BaseEntity.GetPersianNow();
         public Guid CreatedBy { get; private set; }
 
-
+        public Guid? ProfileId { get; private set; }
         public virtual Profile Profile { get; private set; }
 
 
@@ -50,6 +51,12 @@ namespace Amoozeshyar.Domain.Models
         {
             var pc = new PersianCalendar();
             DateOfBirth = pc.ToDateTime(year, month, day, 0, 0, 0, 0);
+        }
+
+        public void SetProfile(Profile profile)
+        {
+            Profile = profile ?? throw new ArgumentNullException(nameof(profile));
+            ProfileId = profile.Id;
         }
     }
 }

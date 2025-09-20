@@ -9,7 +9,8 @@ namespace Amoozeshyar.Files
 
 		public FileStorage(IWebHostEnvironment env)
 		{
-            _rootPath = Path.Combine(env.WebRootPath, "uploads");
+            var webRoot = env.WebRootPath ?? Path.Combine(env.ContentRootPath, "wwwroot");
+            _rootPath = Path.Combine(webRoot, "uploads");
 
             if (!Directory.Exists(_rootPath))
                 Directory.CreateDirectory(_rootPath);
